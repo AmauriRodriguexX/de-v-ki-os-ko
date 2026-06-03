@@ -1,0 +1,336 @@
+{
+  "project": "Kiosko Web Redesign 2026",
+  "version": "1.0.0",
+  "goal": "Incentivar visitas físicas al punto de venta mediante un sitio web claro, rápido y orientado a geolocalización y promociones.",
+  "design_system": {
+    "methodology": "Atomic Design",
+    "levels": ["Atoms", "Molecules", "Organisms", "Templates", "Pages"]
+  },
+  "tokens": {
+    "typography": {
+      "family": {
+        "primary": "'Montserrat', sans-serif",
+        "mono": "'Courier New', monospace"
+      },
+      "weights": {
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700,
+        "extrabold": 800
+      },
+      "scale": {
+        "h1": { "size": "48px", "weight": 800, "lineHeight": "1.1", "letterSpacing": "-0.02em" },
+        "h2": { "size": "36px", "weight": 700, "lineHeight": "1.2", "letterSpacing": "-0.01em" },
+        "h3": { "size": "24px", "weight": 700, "lineHeight": "1.3" },
+        "h4": { "size": "20px", "weight": 600, "lineHeight": "1.4" },
+        "body-lg": { "size": "18px", "weight": 400, "lineHeight": "1.6" },
+        "body": { "size": "16px", "weight": 400, "lineHeight": "1.6" },
+        "body-sm": { "size": "14px", "weight": 400, "lineHeight": "1.5" },
+        "caption": { "size": "12px", "weight": 500, "lineHeight": "1.4" },
+        "label": { "size": "11px", "weight": 700, "lineHeight": "1.2", "letterSpacing": "0.08em", "textTransform": "uppercase" }
+      }
+    },
+    "colors": {
+      "brand": {
+        "blue": "#1387C7",
+        "blue-dark": "#045098",
+        "red": "#FF0200",
+        "red-warm": "#DB3714",
+        "yellow": "#FCD700",
+        "green": "#51A639"
+      },
+      "pastel": {
+        "blue-light": "#EBF6FD",
+        "blue-mid": "#C8E8F7",
+        "red-light": "#FFF0F0",
+        "red-mid": "#FFD5D5",
+        "yellow-light": "#FFFBEA",
+        "yellow-mid": "#FFF3B8",
+        "green-light": "#F0F9EC",
+        "green-mid": "#D4EDCA",
+        "orange-light": "#FFF2EE",
+        "orange-mid": "#FDDDD5"
+      },
+      "ui": {
+        "primary": "#1387C7",
+        "primary-hover": "#0E6FA8",
+        "primary-active": "#045098",
+        "secondary": "#FCD700",
+        "secondary-hover": "#E6C300",
+        "danger": "#FF0200",
+        "danger-hover": "#DB3714",
+        "success": "#51A639",
+        "success-hover": "#3D8029"
+      },
+      "neutral": {
+        "text-primary": "#1A1D2E",
+        "text-secondary": "#4A5068",
+        "text-muted": "#8890AA",
+        "text-disabled": "#BEC4D2",
+        "surface": "#FFFFFF",
+        "surface-2": "#F7F9FF",
+        "surface-3": "#EEF2FB",
+        "border": "#E2E7F2",
+        "border-strong": "#C8D0E8",
+        "overlay": "rgba(26,29,46,0.55)"
+      }
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px",
+      "2xl": "48px",
+      "3xl": "64px",
+      "4xl": "96px"
+    },
+    "radius": {
+      "sm": "6px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "24px",
+      "full": "9999px"
+    },
+    "shadow": {
+      "sm": "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05)",
+      "md": "0 4px 12px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05)",
+      "lg": "0 8px 24px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06)",
+      "xl": "0 20px 48px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08)"
+    }
+  },
+  "atoms": {
+    "Button": {
+      "variants": [
+        {
+          "name": "Primary",
+          "description": "CTA principal — azul sólido",
+          "styles": {
+            "background": "#1387C7",
+            "color": "#FFFFFF",
+            "padding": "14px 28px",
+            "borderRadius": "12px",
+            "fontWeight": 700,
+            "fontSize": "16px",
+            "hover": { "background": "#0E6FA8", "transform": "translateY(-1px)", "shadow": "0 6px 20px rgba(19,135,199,0.35)" }
+          }
+        },
+        {
+          "name": "CTA Danger",
+          "description": "Acciones urgentes o de alta prioridad — rojo marca",
+          "styles": {
+            "background": "#FF0200",
+            "color": "#FFFFFF",
+            "padding": "14px 28px",
+            "borderRadius": "12px",
+            "fontWeight": 700,
+            "fontSize": "16px"
+          }
+        },
+        {
+          "name": "Encuéntralo",
+          "description": "CTA geolocalización — siempre visible en cards de promo",
+          "styles": {
+            "background": "#FCD700",
+            "color": "#1A1D2E",
+            "padding": "12px 24px",
+            "borderRadius": "12px",
+            "fontWeight": 700,
+            "fontSize": "15px",
+            "icon": "📍"
+          }
+        },
+        {
+          "name": "Ghost",
+          "description": "Secundario o navegación",
+          "styles": {
+            "background": "transparent",
+            "color": "#1387C7",
+            "border": "2px solid #1387C7",
+            "padding": "12px 24px",
+            "borderRadius": "12px",
+            "fontWeight": 600
+          }
+        }
+      ]
+    },
+    "Badge": {
+      "variants": [
+        { "name": "Promo", "bg": "#FFF3B8", "color": "#A07800", "label": "Promo del día" },
+        { "name": "Nuevo", "bg": "#D4EDCA", "color": "#2D6B1B", "label": "Nuevo" },
+        { "name": "Agotándose", "bg": "#FFD5D5", "color": "#A00000", "label": "Últimas piezas" },
+        { "name": "Miércoles Cervecero", "bg": "#EBF6FD", "color": "#045098", "label": "Miércoles" }
+      ]
+    },
+    "Tag": {
+      "variants": [
+        { "name": "Categoría", "bg": "#EEF2FB", "color": "#4A5068", "radius": "9999px" },
+        { "name": "Ciudad", "bg": "#EBF6FD", "color": "#1387C7", "icon": "📍" }
+      ]
+    },
+    "Input": {
+      "styles": {
+        "border": "1.5px solid #E2E7F2",
+        "borderRadius": "12px",
+        "padding": "14px 16px",
+        "fontSize": "16px",
+        "focus": { "border": "1.5px solid #1387C7", "shadow": "0 0 0 3px rgba(19,135,199,0.15)" }
+      }
+    }
+  },
+  "molecules": {
+    "PromoCard": {
+      "description": "Card de producto en promoción. Reemplaza las imágenes estáticas actuales.",
+      "anatomy": ["imagen producto", "badge categoría", "nombre producto", "descripción corta (1 línea)", "precio o ahorro", "vigencia", "CTA Encuéntralo"],
+      "styles": {
+        "background": "#FFFFFF",
+        "borderRadius": "16px",
+        "shadow": "0 4px 12px rgba(0,0,0,0.08)",
+        "padding": "0",
+        "overflow": "hidden",
+        "imageHeight": "180px",
+        "imageObjectFit": "cover"
+      },
+      "states": ["default", "hover (lift + shadow)", "active"]
+    },
+    "GeoModal": {
+      "description": "Modal que se abre al dar click en 'Encuéntralo'. Muestra sucursal más cercana.",
+      "anatomy": ["mapa miniatura", "nombre sucursal", "dirección", "distancia estimada", "horario", "botón Abrir en Maps", "botón Cómo llegar"],
+      "trigger": "Click en CTA 'Encuéntralo' desde cualquier card de promo",
+      "behavior": "Pide permiso de geolocalización al primer uso. Guarda preferencia en localStorage."
+    },
+    "NavItem": {
+      "states": ["default", "hover", "active", "dropdown-open"],
+      "styles": {
+        "fontWeight": 600,
+        "fontSize": "15px",
+        "color": "#4A5068",
+        "hoverColor": "#1387C7",
+        "activeIndicator": "3px solid #1387C7 bottom border"
+      }
+    },
+    "SearchBar": {
+      "placeholder": "Busca productos, sucursales o promos...",
+      "icon": "🔍",
+      "styles": { "borderRadius": "9999px", "background": "#F7F9FF" }
+    }
+  },
+  "organisms": {
+    "Header": {
+      "description": "Header compacto, máximo 64px de altura en desktop, 56px en mobile.",
+      "layout": "logo izq | nav centro | acciones der (buscar, ciudad, facturación)",
+      "sticky": true,
+      "background": "#FFFFFF",
+      "border": "1px solid #E2E7F2",
+      "shadow": "0 2px 8px rgba(0,0,0,0.06)",
+      "logo": { "maxHeight": "36px" },
+      "nav": {
+        "items": [
+          { "label": "Promociones", "href": "/promociones", "highlight": true },
+          { "label": "Sucursales", "href": "/sucursales", "icon": "📍" },
+          { "label": "YAYA App", "href": "/yaya" },
+          { "label": "Servicios", "href": "/servicios" },
+          { "label": "Facturación", "href": "/facturacion", "style": "ghost-small" }
+        ]
+      },
+      "mobile": {
+        "breakpoint": "768px",
+        "pattern": "hamburger menu",
+        "stickyBar": ["Inicio", "Promos", "Sucursales", "YAYA"]
+      }
+    },
+    "HeroSection": {
+      "description": "Hero con geolocalización inmediata. Primera acción visible: encontrar sucursal.",
+      "layout": "texto izquierda | mapa/ilustración derecha",
+      "headline": "Encuentra tu Kiosko más cercano",
+      "subheadline": "Promociones de hoy disponibles en tu tienda",
+      "primaryCTA": { "label": "📍 Encontrar mi Kiosko", "action": "requestGeolocation" },
+      "secondaryCTA": { "label": "Ver promociones", "href": "/promociones" },
+      "background": "#EBF6FD"
+    },
+    "PromoSection": {
+      "description": "Grid de cards de promociones. Filtrable por categoría.",
+      "layout": "filtros sticky arriba | grid 2-4 cols responsive",
+      "filters": ["Todos", "Miércoles Cervecero", "Botanas", "Helados", "Hidratación", "Vinos y Licores", "Súper Lunes"],
+      "cardStyle": "PromoCard",
+      "emptyState": "No hay promos activas en esta categoría hoy."
+    },
+    "GeolocSection": {
+      "description": "Sección dedicada al localizador de tiendas.",
+      "layout": "mapa Google Maps izquierda | lista sucursales derecha",
+      "features": ["auto-detect ubicación", "búsqueda por ciudad", "filtro por servicios disponibles", "horarios en tiempo real"],
+      "mapProvider": "Google Maps API"
+    },
+    "YayaSection": {
+      "description": "Sección explicativa de la app YAYA. Debe resolver: ¿qué es? ¿por qué la bajo?",
+      "layout": "mockup app izquierda | beneficios derecha",
+      "benefits": [
+        "Acumula puntos en cada compra",
+        "Promos exclusivas para usuarios YAYA",
+        "Historial de compras",
+        "Descarga disponible en iOS y Android"
+      ],
+      "CTAs": ["App Store", "Google Play"]
+    },
+    "Footer": {
+      "layout": "4 columnas desktop | acordeón mobile",
+      "columns": ["Kiosko", "Sucursales", "Servicios", "Redes / App"],
+      "bottom": "© 2026 KIOSKO. Todos los derechos reservados."
+    }
+  },
+  "pages": {
+    "Home": {
+      "sections": ["Header", "HeroSection (geoloc)", "PromoSection (top 6)", "GeolocSection", "YayaSection", "Footer"],
+      "primaryObjective": "Llevar al usuario a encontrar la sucursal más cercana",
+      "funnelEvents": ["page_view", "geoloc_requested", "promo_card_click", "encontralo_click", "sucursal_viewed", "maps_opened"]
+    },
+    "Promociones": {
+      "url": "/promociones",
+      "sections": ["Header", "Filtros categoría sticky", "PromoGrid con paginación", "Footer"],
+      "subpages": [
+        "/promociones/cerveza",
+        "/promociones/botanas",
+        "/promociones/helados",
+        "/promociones/hidratacion",
+        "/promociones/vinos-y-licores",
+        "/promociones/super-lunes"
+      ]
+    },
+    "Sucursales": {
+      "url": "/sucursales",
+      "sections": ["Header", "GeolocSection full", "Footer"],
+      "subpages": ["/sucursales/colima", "/sucursales/culiacan", "/sucursales/tepic", "/sucursales/mazatlan", "/sucursales/guadalajara"]
+    },
+    "Yaya": {
+      "url": "/yaya",
+      "sections": ["Header", "YayaSection hero", "Features grid", "App download CTAs", "Footer"]
+    }
+  },
+  "measurement": {
+    "events": [
+      { "event": "page_view", "trigger": "Carga de cualquier página" },
+      { "event": "geoloc_requested", "trigger": "Click en 'Encontrar mi Kiosko'" },
+      { "event": "geoloc_granted", "trigger": "Usuario acepta permiso de ubicación" },
+      { "event": "promo_card_click", "trigger": "Click en card de promo", "params": ["category", "product_name"] },
+      { "event": "encontralo_click", "trigger": "Click en CTA 'Encuéntralo'", "params": ["product", "category"] },
+      { "event": "sucursal_viewed", "trigger": "Modal de sucursal abierto", "params": ["sucursal_name", "city"] },
+      { "event": "maps_opened", "trigger": "Click en 'Abrir en Maps'", "params": ["sucursal_name"] },
+      { "event": "yaya_cta_click", "trigger": "Click en descarga de app YAYA", "params": ["platform"] },
+      { "event": "factura_click", "trigger": "Click en Facturación desde header" },
+      { "event": "category_filter", "trigger": "Cambio de filtro en promos", "params": ["filter_name"] }
+    ]
+  },
+  "tech_notes": {
+    "fonts": "Google Fonts: Montserrat (400,500,600,700,800)",
+    "icons": "Phosphor Icons o Lucide",
+    "maps": "Google Maps JavaScript API + Places API",
+    "cms": "Headless CMS (definir: Contentful, Sanity o Strapi)",
+    "performance_targets": {
+      "LCP": "< 2.5s",
+      "FCP": "< 1.8s",
+      "CLS": "< 0.1",
+      "Time_to_Interactive": "< 3.5s"
+    }
+  }
+}

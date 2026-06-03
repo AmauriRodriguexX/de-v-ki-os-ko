@@ -1,0 +1,253 @@
+{
+  "_meta": {
+    "description": "Adiciones al JSON base de Kiosko Web 2026. Solo agrega lo que falta — NO modifica estructura existente.",
+    "base_json": "kiosko_design_system.json",
+    "version": "2.0 — additions only",
+    "date": "2026-03-12"
+  },
+
+  "new_components": {
+
+    "atoms": {
+      "CountdownTimer": {
+        "description": "Contador regresivo para generar urgencia en Miércoles Cervecero.",
+        "file_suggestion": "/src/app/components/atoms/CountdownTimer.tsx",
+        "behavior": "Muestra tiempo restante hasta las 23:59 del miércoles actual. Se oculta si no es miércoles.",
+        "display": "HH:MM:SS",
+        "styles": {
+          "background": "#045098",
+          "color": "#FCD700",
+          "fontWeight": 800,
+          "borderRadius": "8px",
+          "padding": "6px 14px",
+          "fontFamily": "'Montserrat', sans-serif",
+          "fontSize": "20px",
+          "letterSpacing": "0.04em"
+        },
+        "label": "⏱ Termina en:"
+      }
+    },
+
+    "molecules": {
+      "CrossingPromoCard": {
+        "description": "Card de combo cruzado (Crossing Promo). Muestra 2 productos en una sola card para subir ticket promedio.",
+        "file_suggestion": "/src/app/components/molecules/CrossingPromoCard.tsx",
+        "anatomy": [
+          "badge 'Combo del día'",
+          "producto A (imagen, nombre, precio)",
+          "símbolo + (separador visual)",
+          "producto B (imagen, nombre, precio)",
+          "precio combo total (con ahorro resaltado)",
+          "CTA 'Encuéntralo' (reutiliza GeoModal existente)"
+        ],
+        "examples": [
+          { "a": "Caguama Tecate", "b": "Sabritas 160g", "label": "El Clásico" },
+          { "a": "Electrolit 625ml", "b": "Barra de cereal", "label": "Hidratación + Energía" },
+          { "a": "Ron Bacardí 750ml", "b": "Coca-Cola 2L", "label": "Viernes de Coctelería" }
+        ],
+        "styles": {
+          "background": "#FFFFFF",
+          "borderRadius": "16px",
+          "border": "2px solid #FFF3B8",
+          "shadow": "0 4px 16px rgba(252,215,0,0.15)",
+          "badgeBg": "#FCD700",
+          "badgeColor": "#1A1D2E"
+        }
+      },
+
+      "WhatsAppNewsletterWidget": {
+        "description": "Widget de suscripción al grupo de difusión de WhatsApp para recibir promos.",
+        "file_suggestion": "/src/app/components/molecules/WhatsAppNewsletterWidget.tsx",
+        "anatomy": [
+          "ícono WhatsApp",
+          "headline: '¿Quieres las promos antes que nadie?'",
+          "subtext: 'Únete a nuestro grupo de difusión en WhatsApp'",
+          "input teléfono (o botón directo a wa.me link)",
+          "CTA 'Unirme al grupo'"
+        ],
+        "behavior": "Abre wa.me/[número] con mensaje pre-llenado. No requiere backend.",
+        "styles": {
+          "background": "#F0F9EC",
+          "border": "1.5px solid #D4EDCA",
+          "borderRadius": "16px",
+          "ctaBg": "#25D366",
+          "ctaColor": "#FFFFFF"
+        },
+        "placement": "Footer (antes del copyright) y/o sección dedicada en Home"
+      },
+
+      "SocialFeedStrip": {
+        "description": "Strip de últimos 3 posts de redes sociales (IG, FB, TikTok). No satura.",
+        "file_suggestion": "/src/app/components/molecules/SocialFeedStrip.tsx",
+        "anatomy": [
+          "título 'Síguenos'",
+          "3 cards de post (imagen thumbnail, red social icon, fecha)",
+          "CTA 'Ver más en Instagram / TikTok'"
+        ],
+        "constraint": "Máximo 3 posts por red. Mock data inicial, luego conectar a API.",
+        "placement": "Antes del Footer en Home"
+      },
+
+      "YayaPointsBadge": {
+        "description": "Badge que muestra los puntos YAYA ganables al comprar una promo. Visible en PromoCard y CrossingPromoCard.",
+        "file_suggestion": "/src/app/components/molecules/YayaPointsBadge.tsx",
+        "anatomy": ["ícono YAYA (logo pequeño)", "texto '+X puntos YAYA'"],
+        "styles": {
+          "background": "#EBF6FD",
+          "color": "#045098",
+          "borderRadius": "9999px",
+          "fontSize": "11px",
+          "fontWeight": 700
+        },
+        "integration": "Añadir como prop opcional en PromoCard.tsx existente: yayaPoints?: number"
+      }
+    },
+
+    "organisms": {
+      "CrossingPromosSection": {
+        "description": "Sección 'Combos del día' — el corazón visual del sitio según el brief.",
+        "file_suggestion": "/src/app/components/organisms/CrossingPromosSection.tsx",
+        "placement_in_home": "Entre PromoSection y FeaturedProducts",
+        "layout": "Grid 2 columnas desktop, 1 columna mobile",
+        "headline": "Combos del Día",
+        "subheadline": "Dos promos, una gran idea",
+        "features": [
+          "3-4 CrossingPromoCards",
+          "Rotación automática cada 24h (basada en fecha)",
+          "CTA 'Ver todos los combos'"
+        ],
+        "background": "#FFFBEA"
+      },
+
+      "QuickAccessSection": {
+        "description": "Accesos directos en Home — iconos grandes táctiles para categorías principales.",
+        "file_suggestion": "/src/app/components/organisms/QuickAccessSection.tsx",
+        "placement_in_home": "Justo debajo del HeroSection (antes de PromoSection)",
+        "items": [
+          { "label": "Cerveza & Bebidas", "icon": "🍺", "href": "/promociones/cerveza", "color": "#EBF6FD" },
+          { "label": "Despensa Básica", "icon": "🛒", "href": "/promociones/super-lunes", "color": "#FFF3B8" },
+          { "label": "Snacks & Hidratación", "icon": "🍿", "href": "/promociones/botanas", "color": "#F0F9EC" },
+          { "label": "YAYA App", "icon": "💜", "href": "/yaya", "color": "#F3F0FF" },
+          { "label": "Servicios", "icon": "⚡", "href": "/servicios", "color": "#FFF2EE" },
+          { "label": "Sucursales", "icon": "📍", "href": "/sucursales", "color": "#EBF6FD" }
+        ],
+        "styles": {
+          "itemBorderRadius": "16px",
+          "itemPadding": "20px 16px",
+          "iconSize": "32px",
+          "labelFontWeight": 700,
+          "labelFontSize": "13px",
+          "gridDesktop": "6 columnas",
+          "gridMobile": "3 columnas"
+        }
+      },
+
+      "ChatbotWidget": {
+        "description": "Widget de chatbot para atención a incidencias de clientes.",
+        "file_suggestion": "/src/app/components/organisms/ChatbotWidget.tsx",
+        "phase": "FLY — implementación futura (placeholder en JSON para documentar la intención)",
+        "placement": "FAB secundario bottom-left (el FAB de sucursal va bottom-right)",
+        "trigger": "Click en ícono de chat",
+        "features": [
+          "Saludo inicial automático",
+          "Opciones rápidas: Facturación / Reportar incidencia / Encontrar sucursal / Hablar con agente",
+          "Escalación a WhatsApp si no resuelve"
+        ],
+        "styles": {
+          "fabBg": "#25D366",
+          "fabIcon": "MessageCircle (lucide-react)",
+          "fabSize": "52px",
+          "position": "bottom-left, 24px margen"
+        },
+        "note": "No implementar hasta confirmar proveedor de chatbot (fase RUN/FLY del roadmap TGE)"
+      }
+    }
+  },
+
+  "modifications_to_existing": {
+
+    "pages_detail.Home.sections_order": {
+      "action": "REORDER — insertar nuevas secciones sin eliminar las existentes",
+      "new_order": [
+        "HeroSection",
+        "QuickAccessSection (NUEVO)",
+        "PromoSection (limit=6)",
+        "CrossingPromosSection (NUEVO)",
+        "FeaturedProducts",
+        "GeolocSection",
+        "SocialFeedStrip (NUEVO)",
+        "WhatsAppNewsletterWidget (NUEVO)",
+        "YayaSection",
+        "Footer"
+      ]
+    },
+
+    "components_detail.HeroSection.pendiente": {
+      "action": "EXTEND — agregar a la lista de pendientes existente",
+      "add": [
+        "Agregar CountdownTimer visible solo los miércoles dentro del slide de Miércoles Cervecero",
+        "Agregar slides de Lunes (Súper Lunes — Despensa) y Martes (Snacking) y actualizar dayMap"
+      ]
+    },
+
+    "components_detail.PromoSection.features": {
+      "action": "EXTEND — agregar features sin tocar las existentes",
+      "add": [
+        "YayaPointsBadge como prop opcional en cada PromoCard (yayaPoints?: number)",
+        "Subsección destacada 'Miércoles Cervecero' con CountdownTimer visible solo miércoles",
+        "Subsección 'Súper Lunes' visible solo lunes con badge especial"
+      ]
+    },
+
+    "components_detail.FloatingStoreButton.features": {
+      "action": "EXTEND — agregar comportamiento sin romper el existente",
+      "add": [
+        "Ocultar en /sucursales (ya anotado como pendiente — mover a implementado)",
+        "Mostrar mini-tooltip con nombre de sucursal más cercana si geoloc ya fue otorgada"
+      ]
+    },
+
+    "pending_improvements": {
+      "action": "EXTEND — agregar a la lista existente",
+      "add": [
+        "Implementar QuickAccessSection con 6 accesos directos táctiles debajo del Hero",
+        "Implementar CrossingPromosSection con 3-4 combos del día",
+        "Implementar CountdownTimer en slide de Miércoles Cervecero",
+        "Agregar YayaPointsBadge como prop opcional en PromoCard",
+        "Implementar WhatsAppNewsletterWidget en Home y Footer",
+        "Implementar SocialFeedStrip (últimos 3 posts IG/FB/TikTok) antes del Footer",
+        "Lazy Loading explícito en imágenes de PromoCard y CrossingPromoCard (loading='lazy')",
+        "Documentar ChatbotWidget como placeholder para fase RUN/FLY"
+      ]
+    }
+  },
+
+  "new_data_structures": {
+
+    "crossingPromos": {
+      "file_suggestion": "/src/app/data/crossingPromos.ts",
+      "description": "Datos de combos cruzados. Estructura separada para no contaminar promos.ts existente.",
+      "schema": {
+        "id": "string",
+        "label": "string — nombre del combo (ej. 'El Clásico')",
+        "productA": { "name": "string", "emoji": "string", "price": "string", "promoId": "string (ref a promos.ts)" },
+        "productB": { "name": "string", "emoji": "string", "price": "string", "promoId": "string (ref a promos.ts)" },
+        "comboPrice": "string",
+        "saving": "string",
+        "activeDays": "number[] — 0=domingo, 1=lunes... (vacío = todos los días)",
+        "yayaPoints": "number"
+      }
+    },
+
+    "quickAccess": {
+      "file_suggestion": "/src/app/data/quickAccess.ts",
+      "description": "Items de accesos directos. Array simple, fácil de editar desde CMS futuro.",
+      "schema": {
+        "label": "string",
+        "icon": "string (emoji o nombre de lucide-react icon)",
+        "href": "string",
+        "color": "string (hex del fondo del item)"
+      }
+    }
+  }
+}

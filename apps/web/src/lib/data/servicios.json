@@ -1,0 +1,341 @@
+{
+  "categorias": [
+    {
+      "id": "servicios-del-hogar",
+      "nombre": "Servicios del Hogar",
+      "servicios": [
+        {
+          "id": "cfe",
+          "nombre": "CFE",
+          "descripcion": "Tu pago al instante, Comisión $14. Solo pagos en efectivo."
+        },
+        {
+          "id": "telmex",
+          "nombre": "Telmex",
+          "descripcion": "Consulta tu saldo sin costo, sin necesidad de tu recibo, Pago al instante. Comisión $18. Solo pagos en efectivo."
+        },
+        {
+          "id": "mega",
+          "nombre": "Mega",
+          "descripcion": "El pago se refleja al instante. Comisión de $18.00. Solo pagos en efectivo."
+        },
+        {
+          "id": "izzi",
+          "nombre": "IZZI",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "wizz",
+          "nombre": "Wizz",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "totalplay",
+          "nombre": "Totalplay",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "sky",
+          "nombre": "Sky",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "dish",
+          "nombre": "Dish",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "star-tv",
+          "nombre": "Star TV",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        }
+      ]
+    },
+    {
+      "id": "servicios-financieros",
+      "nombre": "Servicios Financieros",
+      "servicios": [
+        {
+          "id": "santander",
+          "nombre": "Santander",
+          "descripcion": "Deposita en efectivo y paga tu tarjeta de crédito hasta $6,000 por transacción y $10,000 diario con reflejo al instante. Comisión de $15."
+        },
+        {
+          "id": "bbva",
+          "nombre": "BBVA",
+          "descripcion": "Depósitos en efectivo (a tarjeta de débito), pago de tarjeta de crédito y pago de servicios. Límite de operación hasta $6,000, límite máximo por día $19,000 con reflejo al instante. Comisión por operación (IVA incluido) de $17. De 6:00 a 22:00 hrs."
+        },
+        {
+          "id": "retiros-multibancos",
+          "nombre": "Retiros Multibancos",
+          "descripcion": "Tarjeta de débito, Retiros desde $100 hasta $3,000 sujeto a disponibilidad en tienda. Comisión de $20.00."
+        },
+        {
+          "id": "compartamos-banco",
+          "nombre": "Compartamos Banco",
+          "descripcion": "Pago de crédito en efectivo. Límite por operación hasta por $6,000. Comisión por operación (IVA incluido) $15.00. De 06:00 a 22:00 pm."
+        }
+      ]
+    },
+    {
+      "id": "servicios-medios-de-pago",
+      "nombre": "Medios de Pago",
+      "servicios": [
+        {
+          "id": "amazon-pago",
+          "nombre": "Amazon",
+          "descripcion": "Recargas y pagos de tus compras. Pago en efectivo. Comisión de $5.00."
+        },
+        {
+          "id": "dapp",
+          "nombre": "Dapp",
+          "descripcion": "Método de pago en efectivo a través de una referencia. Comisión de $12.00."
+        },
+        {
+          "id": "klar",
+          "nombre": "Klar",
+          "descripcion": "Se pueden hacer depósitos en efectivo a su cuenta de ahorro, crédito e inversión. Comisión: $10.00."
+        },
+        {
+          "id": "elektra",
+          "nombre": "Elektra",
+          "descripcion": "Pagos de créditos de tienda en efectivo. Comisión: $10.00."
+        },
+        {
+          "id": "mercado-pago",
+          "nombre": "Mercado Pago",
+          "descripcion": "Pagos de créditos de tienda en efectivo. Comisión: $10.00."
+        },
+        {
+          "id": "bradescard",
+          "nombre": "Bradescard",
+          "descripcion": "Pago en efectivo a tarjeta. Comisión de $14."
+        },
+        {
+          "id": "passport",
+          "nombre": "Passport",
+          "descripcion": "Tu pago al instante. Comisión $18. Solo pagos en efectivo."
+        },
+        {
+          "id": "todito-cash",
+          "nombre": "Todito Cash",
+          "descripcion": "Pago en efectivo o con tarjeta. Comisión de $9."
+        }
+      ]
+    },
+    {
+      "id": "servicios-tiempo-aire-y-datos",
+      "nombre": "Tiempo Aire y Datos",
+      "servicios": [
+        {
+          "id": "telcel",
+          "nombre": "Telcel",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta. Paga tu plan telefónico, solo con tu referencia única. Pago en efectivo."
+        },
+        {
+          "id": "att",
+          "nombre": "AT&T",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta. Paga tu plan telefónico, solo con tu referencia única. Pago en efectivo."
+        },
+        {
+          "id": "unefon",
+          "nombre": "Unefon",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta."
+        },
+        {
+          "id": "movistar",
+          "nombre": "Movistar",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta. Paga tu plan telefónico, solo con tu referencia única. Pago en efectivo."
+        },
+        {
+          "id": "virgin-mobile",
+          "nombre": "Virgin Mobile",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta."
+        },
+        {
+          "id": "bait",
+          "nombre": "Bait",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta."
+        },
+        {
+          "id": "diri-movil",
+          "nombre": "Diri Móvil",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta."
+        },
+        {
+          "id": "pillofon",
+          "nombre": "Pillofon",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta."
+        },
+        {
+          "id": "freedompop",
+          "nombre": "FreedomPop",
+          "descripcion": "Recarga de línea telefónica. Pagos en efectivo o tarjeta."
+        }
+      ]
+    },
+    {
+      "id": "servicios-entretenimiento",
+      "nombre": "Entretenimiento",
+      "servicios": [
+        {
+          "id": "google",
+          "nombre": "Google",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "netflix",
+          "nombre": "Netflix",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "spotify",
+          "nombre": "Spotify",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "amazon-entretenimiento",
+          "nombre": "Amazon",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "xbox",
+          "nombre": "Xbox",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "nintendo",
+          "nombre": "Nintendo",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "visa",
+          "nombre": "Visa",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "playstation",
+          "nombre": "PlayStation",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "itunes",
+          "nombre": "iTunes",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "garena",
+          "nombre": "Garena",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "vix-premium",
+          "nombre": "ViX Premium",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "roblox",
+          "nombre": "Roblox",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "uber-eats",
+          "nombre": "Uber Eats",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "paramount-plus",
+          "nombre": "Paramount+",
+          "descripcion": "Tarjeta de regalo o PIN electrónico. Pago en efectivo o con tarjeta."
+        },
+        {
+          "id": "cinepolis",
+          "nombre": "Cinépolis",
+          "descripcion": "Pago en efectivo o con tarjeta."
+        }
+      ]
+    },
+    {
+      "id": "servicios-escuela-y-gobierno",
+      "nombre": "Escuela y Gobierno",
+      "servicios": [
+        {
+          "id": "itc",
+          "nombre": "ITC",
+          "descripcion": "Pago de colegiatura. Comisión de $18.00. Tu pago se ve reflejado al siguiente día hábil. Solo pagos en efectivo. Es necesario presentar ficha de pago referenciada."
+        },
+        {
+          "id": "universidad-de-colima",
+          "nombre": "Universidad de Colima",
+          "descripcion": "Pago de colegiatura. Comisión de $9.00. Tu pago se ve reflejado al siguiente día hábil. Solo pagos en efectivo. Es necesario presentar ficha de pago referenciada."
+        }
+      ]
+    },
+    {
+      "id": "servicios-otros-servicios",
+      "nombre": "Otros Servicios",
+      "servicios": [
+        {
+          "id": "pabs",
+          "nombre": "PABS",
+          "descripcion": "Tu pago al instante. Comisión $14.00. Solo pagos en efectivo."
+        },
+        {
+          "id": "betterware",
+          "nombre": "Betterware",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "televia",
+          "nombre": "Televia",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "ilusion",
+          "nombre": "Ilusión",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "lbel",
+          "nombre": "L'BEL",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "andrea",
+          "nombre": "Andrea",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "tupperware",
+          "nombre": "Tupperware",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "zermat",
+          "nombre": "Zermat",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "price-shoes",
+          "nombre": "Price Shoes",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "just",
+          "nombre": "Just",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "fuller",
+          "nombre": "Fuller",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        },
+        {
+          "id": "yves-rocher",
+          "nombre": "Yves Rocher",
+          "descripcion": "Tu pago se refleja el mismo día. Comisión de $18.00. Es necesario presentar tu recibo o referencia. Solo pagos en efectivo."
+        }
+      ]
+    }
+  ]
+}

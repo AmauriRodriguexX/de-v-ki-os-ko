@@ -1,0 +1,11 @@
+{
+  "name": "kiosko-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "dev:web": "pnpm --filter web dev",
+    "build:web": "pnpm --filter web build",
+    "api": "cd apps/api && uvicorn app.main:app --reload --port 8000"
+  }
+}
