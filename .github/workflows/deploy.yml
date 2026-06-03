@@ -40,6 +40,7 @@ jobs:
         working-directory: apps/web
         env:
           NODE_ENV: production
+          VITE_BASE_PATH: /de-v-ki-os-ko
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
