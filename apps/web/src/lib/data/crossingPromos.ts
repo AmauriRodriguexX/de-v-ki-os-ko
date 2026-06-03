@@ -1,4 +1,4 @@
-const A = '/assets';
+const A = (import.meta.env.VITE_BASE_PATH ?? '') + '/assets';
 
 export interface CrossingPromo {
   id: string;
