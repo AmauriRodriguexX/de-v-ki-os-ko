@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { page } from '$app/stores';
   import {
     Search, MapPin, Menu, X, FileText, ChevronDown,
@@ -6,7 +7,7 @@
     Wallet, Smartphone, Gamepad2, GraduationCap, MoreHorizontal, Sparkles
   } from '@lucide/svelte';
 
-  const A = '/assets';
+  const A = base + '/assets';
   const kioskoLogo = `${A}/cb8228e32e6fa9418a2c1113e2b9c576071ceb83.png`;
   const yayaLogo = `${A}/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png`;
 
