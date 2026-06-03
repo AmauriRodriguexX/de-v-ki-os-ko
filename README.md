@@ -1,7 +1,5 @@
 # Kiosko — Monorepo
 
-Rediseño web de Tiendas Kiosko. Migración del frontend generado por Figma Make (React 18 + Vite) a un stack moderno con SvelteKit 5, FastAPI y Strapi como headless CMS.
-
 ---
 
 ## Tabla de contenidos
