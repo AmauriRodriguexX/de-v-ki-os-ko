@@ -1,6 +1,6 @@
 // Datos sembrados desde el proyecto original. En la arquitectura final
 // esto vendrá de Strapi vía FastAPI; por ahora alimenta la Home igual que antes.
-const A = '/assets';
+const A = (import.meta.env.VITE_BASE_PATH ?? '') + '/assets';
 
 export interface Promo {
   id: string;
