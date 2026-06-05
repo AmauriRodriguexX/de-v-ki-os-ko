@@ -9,12 +9,9 @@
   let imgFailed = $state(false);
   let imgLoaded = $state(false);
 
-  const initials = alt
-    .split(/[\s-]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
+  const initials = $derived(
+    alt.split(/[\s-]+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? '').join('')
+  );
 </script>
 
 {#if !src || imgFailed}

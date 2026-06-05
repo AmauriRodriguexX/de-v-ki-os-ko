@@ -1,9 +1,10 @@
 <script lang="ts">
   import { Download } from '@lucide/svelte';
+  import { base } from '$app/paths';
 
   let { points, compact = false }: { points: number; compact?: boolean } = $props();
 
-  const yayaLogo = '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
+  const yayaLogo = base + '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
   let showTooltip = $state(false);
 </script>
 

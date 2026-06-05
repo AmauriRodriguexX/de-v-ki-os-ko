@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Gift, Star, Smartphone, ArrowRight } from '@lucide/svelte';
-
-  const yayaLogo = '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
+  import { base } from '$app/paths';
+  const yayaLogo = base + '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
 
   let { totalPoints, variant = 'inline' }: { totalPoints?: number; variant?: 'inline' | 'compact' } = $props();
 </script>

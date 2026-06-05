@@ -48,12 +48,9 @@
   });
 
   // Reiniciar página al cambiar el breakpoint
-  let prevPerPage = perPage;
   $effect(() => {
-    if (perPage !== prevPerPage) {
-      prevPerPage = perPage;
-      pageIdx = 0;
-    }
+    perPage;
+    pageIdx = 0;
   });
 
   function goTo(p: number) {
@@ -109,6 +106,8 @@
     <div
       class="overflow-hidden"
       style="touch-action:pan-y"
+      role="region"
+      aria-label="Carrusel de productos"
       bind:clientWidth={containerW}
       onpointerdown={onPointerDown}
       onpointermove={onPointerMove}

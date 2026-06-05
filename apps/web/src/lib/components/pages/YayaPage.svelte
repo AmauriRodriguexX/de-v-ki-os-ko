@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Gift, Zap, Shield, TrendingUp } from '@lucide/svelte';
   import YayaSectionBlock from '$lib/components/blocks/YayaSectionBlock.svelte';
-
-  const yayaLogo = '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
+  import { base } from '$app/paths';
+  const yayaLogo = base + '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
 
   const features = [
     { icon: Gift, title: 'Recompensas instantáneas', desc: 'Canjea tus puntos al momento en cualquier sucursal' },

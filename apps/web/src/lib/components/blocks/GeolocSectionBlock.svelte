@@ -18,7 +18,8 @@
   const states = ['Todos', ...Array.from(new Set(sucursales.map((s) => s.state)))];
   const cities = Array.from(new Set(sucursales.map((s) => s.city)));
 
-  let searchText = $state(initialCity);
+  let searchText = $state('');
+  $effect(() => { searchText = initialCity; });
   let filterState = $state('Todos');
   let selected = $state<Sucursal | null>(null);
   let hovered = $state<Sucursal | null>(null);

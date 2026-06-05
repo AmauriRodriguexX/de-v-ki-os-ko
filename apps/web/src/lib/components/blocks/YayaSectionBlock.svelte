@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Star, Gift, History, Download, Smartphone } from '@lucide/svelte';
   import Button from '$lib/components/atoms/Button.svelte';
-
-  const yayaLogo = '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
+  import { base } from '$app/paths';
+  const yayaLogo = base + '/assets/c7490a2487aafb5bcfe6d42e8f9cb869d7abde70.png';
 
   const benefits = [
     { icon: Star, label: 'Acumula puntos en cada compra', desc: 'Gana puntos por cada peso gastado' },

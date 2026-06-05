@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { base } from '$app/paths';
   import { MapPin, ChevronRight, ChevronLeft, Beer, IceCream, Zap, Wine, Cookie } from '@lucide/svelte';
 
   type Slide = {
@@ -17,7 +18,7 @@
     icon: typeof Beer;
   };
 
-  const A = '/assets';
+  const A = base + '/assets';
   const defaultSlides: Slide[] = [
     {
       id: 'miercoles', day: 'Miércoles', headline: 'Miércoles Cervecero',
