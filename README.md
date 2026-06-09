@@ -204,11 +204,69 @@ El menú incluye las 9 zonas de expansión: Colima, Guzmán, Tecomán, Manzanill
 
 ## Propuesta de Modelos de IA para el Chatbot
 
-Para implementar las funciones inteligentes del chatbot (extracción de tickets por foto/QR, consultas de YAYA y promociones), se evaluaron 3 modelos eficientes:
+Para implementar las funciones inteligentes del chatbot (extracción de tickets por foto/QR, consultas de YAYA y promociones), se evaluaron 3 proveedores líderes. A continuación se detalla la comparativa técnica, de costos y su idoneidad para el negocio de Kiosko:
 
-1. **Gemini 2.5 Flash / 1.5 Flash (Recomendado / Ganador):**
-   * **Por qué es el más adecuado:** Es el modelo más rápido y con el costo por token más bajo del mercado. Su soporte para español es sobresaliente. Su **multimodalidad nativa** lo hace el más robusto para procesar imágenes de tickets físicos (OCR) y extraer la información estructurada mediante *Structured Outputs* de forma precisa y económica.
-2. **GPT-4o mini:**
-   * **Detalles:** Muy rápido y estable para *Function Calling*, pero el procesamiento de imágenes y el costo a gran escala en producción es ligeramente superior al de Gemini Flash.
-3. **Claude 3.5 Haiku:**
-   * **Detalles:** Excelente nivel conversacional y empático, ideal para atención al cliente compleja, pero sus costos por token y latencia son mayores.
+### 1. Tabla Comparativa de Costos (USD)
+
+| Proveedor / Modelo | Costo Input (por 1M tokens) | Costo Output (por 1M tokens) | Costo por Imagen (OCR de Ticket) | Soporta Visión (Fotos) |
+|---|---|---|---|---|
+| **Gemini 2.5/1.5 Flash (Recomendado)** | **$0.075** | **$0.30** | **~$0.00002** (nativo por tokens) | Sí (Nativo) |
+| **GPT-4o mini** | $0.15 | $0.60 | **$0.002** | Sí (Nativo) |
+| **Claude 3.5 Haiku** | $0.80 | $4.00 | *No disponible* | No (Solo texto) |
+| **Claude 3.5 Sonnet** (para soporte de fotos) | $3.00 | $15.00 | **$0.004** | Sí (Nativo) |
+
+> [!IMPORTANT]
+> **Claude 3.5 Haiku** (el modelo económico de Anthropic) **no tiene soporte para procesar imágenes**. Si quisiéramos implementar la lectura de tickets por foto/QR con Anthropic, estaríamos obligados a subir a **Claude 3.5 Sonnet**, lo que incrementa los costos de tokens y procesamiento unas **47 veces** en comparación con Gemini Flash.
+
+---
+
+### 2. Proyección de Costo Mensual Estimado
+Para una base de **30,000 interacciones al mes** (~1,000 chats diarios) donde se procesan **5,000 fotos de tickets** para facturación:
+
+* **Escenario de Uso:**
+  * Input promedio por chat (prompts, historial, herramientas): 1,500 tokens.
+  * Output promedio por chat (respuesta del bot): 300 tokens.
+  * Total de tokens de entrada: 45 Millones.
+  * Total de tokens de salida: 9 Millones.
+  * Cargas de tickets físicos: 5,000 imágenes de tickets.
+
+* **Costo Mensual con Gemini Flash:**
+  * 45M Input tokens × $0.075/M = $3.38
+  * 9M Output tokens × $0.30/M = $2.70
+  * 5,000 imágenes × $0.00002 = $0.10
+  * **Costo mensual total: ~$6.18 USD** (~$110 MXN)
+
+* **Costo Mensual con GPT-4o mini:**
+  * 45M Input tokens × $0.15/M = $6.75
+  * 9M Output tokens × $0.60/M = $5.40
+  * 5,000 imágenes × $0.002 = $10.00
+  * **Costo mensual total: ~$22.15 USD** (~$400 MXN)
+
+* **Costo Mensual con Claude 3.5 Sonnet (Requerido para fotos):**
+  * 45M Input tokens × $3.00/M = $135.00
+  * 9M Output tokens × $15.00/M = $135.00
+  * 5,000 imágenes × $0.004 = $20.00
+  * **Costo mensual total: ~$290.00 USD** (~$5,200 MXN)
+
+---
+
+### 3. Ventaja Competitiva de Gemini Flash para Kiosko
+1. **Líder en Multimodalidad Económica:** Permite realizar OCR de tickets con fotos o códigos QR de forma prácticamente gratuita (10 centavos de dólar por 5,000 tickets).
+2. **Velocidad Extrema (Baja Latencia):** Es el modelo más rápido en responder, idóneo para clientes en móviles con conexiones de datos móviles.
+3. **Structured Outputs Nativo:** Garantiza que las respuestas de facturación o puntos YAYA se mapeen en un JSON rígido y sin errores sintácticos antes de interactuar con el backend de FastAPI.
+
+---
+
+### 4. Guía de Implementación en el Proyecto
+
+La arquitectura sugerida consta de tres capas:
+
+1. **Frontend (SvelteKit):**
+   * Modificar el componente [Chatbot.svelte](file:///D:/t2o%20carpet%20especial/mikiosko/de-v-ki-os-ko/apps/web/src/lib/components/organisms/Chatbot.svelte) para habilitar un botón de carga de imagen (`<input type="file" accept="image/*" capture="environment">`).
+   * Enviar la imagen codificada en base64 o como FormData hacia el backend de FastAPI.
+2. **Backend (FastAPI - `apps/api`):**
+   * Crear el endpoint `POST /api/chatbot/ticket` que reciba la imagen.
+   * Utilizar el SDK de Google Generative AI para llamar a `gemini-1.5-flash` enviando el buffer de la imagen junto con un esquema Pydantic para estructurar los datos extraídos (RFC, Folio, Monto, Fecha).
+   * Guardar la información fiscal en la sesión personalizada del usuario (conectada a los datos de la app YAYA).
+3. **Integración con Servicios Externos:**
+   * Una vez confirmados los datos del ticket por el usuario en el chat, el backend realiza la petición al sistema de facturación real de Kiosko y le retorna el PDF/XML al chatbot para su descarga inmediata.
