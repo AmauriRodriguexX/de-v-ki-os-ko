@@ -198,3 +198,17 @@ El menú incluye las 9 zonas de expansión: Colima, Guzmán, Tecomán, Manzanill
 | GeoModal en PromoSection | El botón "Encuéntralo" en tarjetas de promo redirige a `/sucursales` en lugar de abrir el modal de mapa | Pendiente |
 | Chatbot backend | El flujo del chatbot genera folios localmente; conectar al sistema de tickets real | Pendiente |
 | Logotipo "Compra Segura" | Agregar logotipo de compra segura en la sección/tarjetas de promociones | Pendiente |
+| Facturación por IA (Chatbot) | Permitir al usuario subir una foto de su ticket o escanear el código QR desde el chatbot para extraer los datos de facturación automáticamente (Gemini Flash). Integrar con inicio de sesión para guardar datos fiscales de forma recurrente. | Pendiente |
+
+---
+
+## Propuesta de Modelos de IA para el Chatbot
+
+Para implementar las funciones inteligentes del chatbot (extracción de tickets por foto/QR, consultas de YAYA y promociones), se evaluaron 3 modelos eficientes:
+
+1. **Gemini 2.5 Flash / 1.5 Flash (Recomendado / Ganador):**
+   * **Por qué es el más adecuado:** Es el modelo más rápido y con el costo por token más bajo del mercado. Su soporte para español es sobresaliente. Su **multimodalidad nativa** lo hace el más robusto para procesar imágenes de tickets físicos (OCR) y extraer la información estructurada mediante *Structured Outputs* de forma precisa y económica.
+2. **GPT-4o mini:**
+   * **Detalles:** Muy rápido y estable para *Function Calling*, pero el procesamiento de imágenes y el costo a gran escala en producción es ligeramente superior al de Gemini Flash.
+3. **Claude 3.5 Haiku:**
+   * **Detalles:** Excelente nivel conversacional y empático, ideal para atención al cliente compleja, pero sus costos por token y latencia son mayores.
