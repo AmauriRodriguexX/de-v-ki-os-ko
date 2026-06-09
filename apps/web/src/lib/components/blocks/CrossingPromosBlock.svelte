@@ -3,13 +3,19 @@
   import { page } from '$app/stores';
   import { Sparkles } from '@lucide/svelte';
   import CrossingPromoCard from '$lib/components/molecules/CrossingPromoCard.svelte';
+  import GeoModal from '$lib/components/molecules/GeoModal.svelte';
   import { crossingPromos } from '$lib/data/crossingPromos';
+  import { sucursales, type Sucursal } from '$lib/data/sucursales';
 
   const today = new Date().getDay();
   const activeCombos = crossingPromos.filter((c) => c.activeDays.length === 0 || c.activeDays.includes(today));
 
   const isPromoPage = $derived($page.url.pathname.startsWith('/promociones'));
-  const encuentralo = () => goto('/sucursales');
+  let selectedSucursal = $state<Sucursal | null>(null);
+  
+  const encuentralo = () => {
+    selectedSucursal = sucursales[0];
+  };
 </script>
 
 {#if activeCombos.length > 0}
@@ -40,4 +46,8 @@
       {/if}
     </div>
   </section>
+{/if}
+
+{#if selectedSucursal}
+  <GeoModal sucursal={selectedSucursal} onClose={() => (selectedSucursal = null)} />
 {/if}

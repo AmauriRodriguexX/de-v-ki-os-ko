@@ -27,7 +27,7 @@
   <img
     {src}
     {alt}
-    class="h-9 w-9 object-contain"
+    class="h-10 w-10 object-contain"
     loading="lazy"
     referrerpolicy="no-referrer"
     onload={() => (imgLoaded = true)}

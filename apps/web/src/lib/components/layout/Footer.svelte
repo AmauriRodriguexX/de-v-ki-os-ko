@@ -1,12 +1,13 @@
 <script lang="ts">
   import { ChevronDown, Facebook, Instagram, Youtube } from '@lucide/svelte';
+  import { slide } from 'svelte/transition';
   import TikTokIcon from '$lib/components/icons/TikTokIcon.svelte';
 
   const columns = [
     {
       title: 'Más información',
       links: [
-        { label: 'Quienes somos', href: '/' },
+        { label: 'Quienes somos', href: '/quienes-somos' },
         { label: 'Productos Destacados', href: '/' },
         { label: 'Bolsa de trabajo', href: '/' },
         { label: 'Administra una tienda', href: '/' },
@@ -81,14 +82,14 @@
           </div>
           <!-- Acordeón móvil -->
           <div class="md:hidden">
-            <button onclick={() => toggle(col.title)} class="flex w-full cursor-pointer items-center justify-between py-3" style="background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.2)">
+            <button onclick={() => toggle(col.title)} class="flex w-full cursor-pointer items-center justify-between py-3" style="background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.15)">
               <span style="font-size:15px; font-weight:700; color:#fff; font-style:italic">{col.title}</span>
-              <ChevronDown class="h-5 w-5 transition-transform" style={`color:rgba(255,255,255,0.7); transform:rotate(${openCol === col.title ? 180 : 0}deg)`} />
+              <ChevronDown class="h-5 w-5 transition-transform duration-300" style={`color:rgba(255,255,255,0.7); transform:rotate(${openCol === col.title ? 180 : 0}deg)`} />
             </button>
             {#if openCol === col.title}
-              <div class="flex flex-col gap-2 py-3 pl-2">
+              <div transition:slide={{ duration: 250 }} class="flex flex-col gap-2.5 py-3.5 pl-2">
                 {#each col.links as link (link.label)}
-                  <a href={link.href} class="no-underline" style="font-size:14px; color:#fff">{link.label}</a>
+                  <a href={link.href} class="no-underline transition-opacity" style="font-size:14px; color:rgba(255,255,255,0.85); py-1">{link.label}</a>
                 {/each}
               </div>
             {/if}
@@ -114,21 +115,23 @@
             {/each}
           </div>
         </div>
-        <!-- Acordeón móvil -->
+        <!-- Acordeón móvil (Borde inferior removido aquí para evitar dobles bordes con la barra inferior) -->
         <div class="md:hidden">
-          <button onclick={() => toggle(contactInfo.title)} class="flex w-full cursor-pointer items-center justify-between py-3" style="background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.2)">
+          <button onclick={() => toggle(contactInfo.title)} class="flex w-full cursor-pointer items-center justify-between py-3" style="background:none; border:none">
             <span style="font-size:15px; font-weight:700; color:#fff; font-style:italic">{contactInfo.title}</span>
-            <ChevronDown class="h-5 w-5 transition-transform" style={`color:rgba(255,255,255,0.7); transform:rotate(${openCol === contactInfo.title ? 180 : 0}deg)`} />
+            <ChevronDown class="h-5 w-5 transition-transform duration-300" style={`color:rgba(255,255,255,0.7); transform:rotate(${openCol === contactInfo.title ? 180 : 0}deg)`} />
           </button>
           {#if openCol === contactInfo.title}
-            <div class="flex flex-col gap-3 py-3 pl-2">
-              {#each contactInfo.phones as p (p.label)}
-                <a href={p.href} class="no-underline" style="font-size:14px; color:#fff">{p.label}</a>
-              {/each}
+            <div transition:slide={{ duration: 250 }} class="flex flex-col gap-4 py-3.5 pl-2">
+              <div class="flex flex-col gap-1.5">
+                {#each contactInfo.phones as p (p.label)}
+                  <a href={p.href} class="no-underline" style="font-size:14px; color:rgba(255,255,255,0.85); py-1">{p.label}</a>
+                {/each}
+              </div>
               {#each contactInfo.emails as item (item.email)}
-                <div class="flex flex-col gap-0.5">
+                <div class="flex flex-col gap-1">
                   <span style="font-size:13px; font-weight:700; color:#fff">{item.question}</span>
-                  <a href={`mailto:${item.email}`} class="no-underline" style="font-size:14px; color:#fff">{item.email}</a>
+                  <a href={`mailto:${item.email}`} class="no-underline" style="font-size:14px; color:rgba(255,255,255,0.85)">{item.email}</a>
                 </div>
               {/each}
             </div>
@@ -146,10 +149,13 @@
       <div class="flex gap-4">
         {#each socialLinks as s (s.label)}
           <a href={s.href} target="_blank" rel="noopener noreferrer" class="transition-opacity hover:opacity-70" aria-label={s.label}>
-            <s.icon class="h-5 w-5" style="color:#fff" />
+            <s.icon class="h-5 w-5" color="#fff" style="color:#fff" />
           </a>
         {/each}
       </div>
     </div>
   </div>
+  
+  <!-- Espaciador móvil para el BottomNavBar (Mejora UX - Mantiene el fondo oscuro del footer hasta abajo) -->
+  <div class="h-24 md:hidden" style="background:#1A1D2E"></div>
 </footer>

@@ -18,11 +18,13 @@
   <section class="w-full py-12 md:py-20" style="background:#F7F9FF">
     <div class="mx-auto max-w-7xl px-4">
       <div class="mb-12 text-center">
-        <h2 style="font-size:clamp(28px,4vw,36px); font-weight:700; line-height:1.2; color:#1A1D2E; margin:0">
-          <span class="inline-flex items-center gap-2">
-            ¿Por qué descargar
-            <img src={yayaLogo} alt="YAYA" class="inline-block h-9 w-9 rounded-lg object-cover" style="vertical-align:middle" />
-            YAYA?
+        <h2 style="font-size:clamp(28px,4vw,36px); font-weight:700; line-height:1.3; color:#1A1D2E; margin:0">
+          <span class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>¿Por qué descargar</span>
+            <span class="inline-flex items-center gap-1.5">
+              <img src={yayaLogo} alt="YAYA" class="h-9 w-9 rounded-xl object-cover shadow-sm" style="vertical-align:middle" />
+              <span>YAYA?</span>
+            </span>
           </span>
         </h2>
         <p style="font-size:18px; color:#4A5068; margin:8px 0 0">Beneficios que te hacen la vida más fácil</p>

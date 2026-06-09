@@ -47,32 +47,80 @@
   });
 
   let locModalOpen = $state(false);
+
+  // Lógica de desvanecimiento dinámico (Scroll fade)
+  let sliderEl = $state<HTMLDivElement | null>(null);
+  let canScrollLeft = $state(false);
+  let canScrollRight = $state(false);
+
+  function updateScroll() {
+    if (!sliderEl) return;
+    canScrollLeft = sliderEl.scrollLeft > 4;
+    // canScrollRight es verdadero si hay contenido oculto a la derecha
+    canScrollRight = sliderEl.scrollLeft < sliderEl.scrollWidth - sliderEl.clientWidth - 4;
+  }
+
+  $effect(() => {
+    if (sliderEl) {
+      updateScroll();
+      const ro = new ResizeObserver(updateScroll);
+      ro.observe(sliderEl);
+      return () => ro.disconnect();
+    }
+  });
 </script>
 
-<section class="w-full py-12 md:py-20" style="background:#F7F9FF">
+<section class="w-full py-12 md:py-20 bg-muted">
   <div class="mx-auto max-w-7xl px-4">
     <!-- Header -->
     <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div class="flex flex-col gap-2">
-        <h2 style="font-size:clamp(28px,4vw,36px); font-weight:700; line-height:1.2; letter-spacing:-0.01em; color:#1A1D2E; margin:0">Encuentra tu sucursal</h2>
-        <p style="font-size:18px; color:#4A5068; margin:0">{filtered.length} tiendas en {filterState === 'Todos' ? 'Colima, Jalisco, Nayarit y Sinaloa' : filterState}</p>
+        <h2 class="text-[clamp(28px,4vw,36px)] font-bold leading-[1.2] tracking-tight text-foreground m-0">Encuentra tu sucursal</h2>
+        <p class="text-[18px] text-[#4A5068] m-0">{filtered.length} tiendas en {filterState === 'Todos' ? 'Colima, Jalisco, Nayarit y Sinaloa' : filterState}</p>
       </div>
-      <button onclick={() => (locModalOpen = true)} class="flex items-center gap-2 rounded-xl px-5 py-3 transition-all duration-200" style={`background:${userLocation ? '#D4EDCA' : '#EBF6FD'}; border:1.5px solid ${userLocation ? '#51A639' : '#C8E8F7'}; color:${userLocation ? '#2D6B1B' : '#045098'}; font-size:14px; font-weight:600`}>
+      <button 
+        onclick={() => (locModalOpen = true)} 
+        class="flex items-center gap-2 rounded-xl px-5 py-3 transition-all duration-200 border-[1.5px] text-sm font-semibold 
+          {userLocation 
+            ? 'bg-[#D4EDCA] border-[#51A639] text-[#2D6B1B]' 
+            : 'bg-[#EBF6FD] border-[#C8E8F7] text-[#045098]'}"
+      >
         <LocateFixed class="h-4 w-4" />
         {userLocation ? 'Ubicación activa' : 'Usar mi ubicación'}
       </button>
     </div>
 
-    <!-- Filtros por estado -->
-    <div class="mb-6 flex gap-2 overflow-x-auto pb-2">
-      {#each states as st (st)}
-        <button onclick={() => (filterState = st)} class="cursor-pointer whitespace-nowrap rounded-full px-4 py-2 transition-all duration-200" style={`background:${filterState === st ? '#1387C7' : '#fff'}; color:${filterState === st ? '#fff' : '#4A5068'}; border:1.5px solid ${filterState === st ? '#1387C7' : '#E2E7F2'}; font-size:14px; font-weight:${filterState === st ? 700 : 500}`}>{st}</button>
-      {/each}
+    <!-- Filtros por estado con desvanecimiento degradado interactivo en las orillas (Mejora UX estilo YouTube) -->
+    <div class="relative w-full mb-6">
+      <!-- Degradado Izquierdo (Sólo visible si canScrollLeft es verdadero) -->
+      <div class="absolute -left-px top-0 bottom-0 z-10 w-8 pointer-events-none transition-opacity duration-300" style={`background:linear-gradient(to right, #F7F9FF 15%, rgba(247, 249, 255, 0) 100%); opacity: ${canScrollLeft ? '1' : '0'};`}></div>
+      
+      <div 
+        bind:this={sliderEl} 
+        onscroll={updateScroll} 
+        class="scrollbar-hide flex gap-2 overflow-x-auto pb-2 px-2 scroll-smooth" 
+        style="scrollbar-width:none; -ms-overflow-style:none;"
+      >
+        {#each states as st (st)}
+          <button 
+            onclick={() => (filterState = st)} 
+            class="cursor-pointer whitespace-nowrap rounded-full px-4 py-2.5 transition-all duration-200 active:scale-95 border-[1.5px] text-sm
+              {filterState === st 
+                ? 'bg-primary border-primary text-white font-bold' 
+                : 'bg-white border-border text-[#4A5068] font-medium'}"
+          >
+            {st}
+          </button>
+        {/each}
+      </div>
+
+      <!-- Degradado Derecho (Sólo visible si canScrollRight es verdadero) -->
+      <div class="absolute -right-px top-0 bottom-0 z-10 w-8 pointer-events-none transition-opacity duration-300" style={`background:linear-gradient(to left, #F7F9FF 15%, rgba(247, 249, 255, 0) 100%); opacity: ${canScrollRight ? '1' : '0'};`}></div>
     </div>
 
     <div class="flex flex-col gap-8 lg:flex-row">
       <!-- Mapa -->
-      <div class="relative min-h-[260px] flex-1 overflow-hidden rounded-2xl md:min-h-[450px]" style="border:1.5px solid #E2E7F2">
+      <div class="relative min-h-[260px] flex-1 overflow-hidden rounded-2xl md:min-h-[450px] border-[1.5px] border-border">
         <MapEmbed
           lat={hovered?.lat ?? userLocation?.lat ?? 21.5}
           lng={hovered?.lng ?? userLocation?.lng ?? -104.9}
@@ -80,17 +128,20 @@
           markerLabel={hovered?.name ?? (userLocation ? 'Mi ubicación' : undefined)}
           class="h-full min-h-[260px] w-full md:min-h-[450px]"
         />
-        <div class="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-xl px-3 py-2" style="background:rgba(255,255,255,0.95); box-shadow:0 4px 12px rgba(0,0,0,0.1); backdrop-filter:blur(8px)">
-          <div class="flex h-7 w-7 items-center justify-center rounded-md" style="background:#1387C7"><MapPin class="h-4 w-4 text-white" /></div>
+        <div class="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-xl px-3 py-2 bg-white/95 shadow-[0_4px_12px_rgba(0,0,0,0.1)] backdrop-blur-sm">
+          <div class="flex h-7 w-7 items-center justify-center rounded-md bg-primary"><MapPin class="h-4 w-4 text-white" /></div>
           <div class="flex flex-col">
-            <span style="font-size:13px; font-weight:700; color:#1A1D2E">{hovered ? hovered.name : 'Sucursales Kiosko'}</span>
-            <span style="font-size:11px; color:#4A5068">{hovered ? `${hovered.city}, ${hovered.state}` : `${filtered.length} ubicaciones`}</span>
+            <span class="text-[13px] font-bold text-foreground">{hovered ? hovered.name : 'Sucursales Kiosko'}</span>
+            <span class="text-[11px] text-[#4A5068]">{hovered ? `${hovered.city}, ${hovered.state}` : `${filtered.length} ubicaciones`}</span>
           </div>
         </div>
         <div class="absolute bottom-4 left-4 right-4 z-10 flex flex-wrap gap-2">
           {#each cities.filter((c) => filterState === 'Todos' || sucursales.some((s) => s.city === c && s.state === filterState)) as city (city)}
-            <button onclick={() => { const cs = sucursales.find((s) => s.city === city); if (cs) hovered = cs; }} class="cursor-pointer rounded-full px-3 py-1.5 transition-all" style="background:rgba(255,255,255,0.92); backdrop-filter:blur(8px); border:1px solid rgba(226,231,242,0.6); font-size:12px; font-weight:600; color:#1A1D2E; box-shadow:0 2px 8px rgba(0,0,0,0.08)">
-              <span style="color:#1387C7">{sucursales.filter((s) => s.city === city).length}</span> {city}
+            <button 
+              onclick={() => { const cs = sucursales.find((s) => s.city === city); if (cs) hovered = cs; }} 
+              class="cursor-pointer rounded-full px-3 py-1.5 transition-all bg-white/92 backdrop-blur-sm border border-border/60 text-xs font-semibold text-foreground shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+            >
+              <span class="text-primary">{sucursales.filter((s) => s.city === city).length}</span> {city}
             </button>
           {/each}
         </div>
@@ -100,29 +151,37 @@
       <div class="flex w-full flex-col gap-4 lg:w-[400px]">
         <div class="relative">
           <Search class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2" style="color:#8890AA" />
-          <input type="text" bind:value={searchText} placeholder="Buscar por ciudad, sucursal o dirección..." class="w-full rounded-xl py-3.5 pl-12 pr-4 outline-none" style="border:1.5px solid #E2E7F2; font-size:15px; background:#fff" />
+          <input type="text" bind:value={searchText} placeholder="Buscar por ciudad, sucursal o dirección..." class="w-full rounded-xl py-3.5 pl-12 pr-4 outline-none border-[1.5px] border-border text-[15px] bg-white" />
         </div>
 
         <div class="flex items-center justify-between px-1">
-          <span style="font-size:13px; color:#8890AA; font-weight:500">{filtered.length} sucursal{filtered.length !== 1 ? 'es' : ''} encontrada{filtered.length !== 1 ? 's' : ''}</span>
+          <span class="text-[13px] text-muted-foreground font-medium">{filtered.length} sucursal{filtered.length !== 1 ? 'es' : ''} encontrada{filtered.length !== 1 ? 's' : ''}</span>
           {#if userLocation}
-            <span class="flex items-center gap-1" style="font-size:12px; color:#51A639; font-weight:600"><Navigation class="h-3 w-3" /> Ordenado por cercanía</span>
+            <span class="flex items-center gap-1 text-xs text-[#51A639] font-semibold"><Navigation class="h-3 w-3" /> Ordenado por cercanía</span>
           {/if}
         </div>
 
         <div class="kiosko-scroll flex max-h-[300px] flex-col gap-3 overflow-y-auto pr-1 md:max-h-[520px]">
           {#each filtered as suc (suc.id)}
-            <button onclick={() => (selected = suc)} onmouseenter={() => (hovered = suc)} onmouseleave={() => (hovered = null)} class="flex cursor-pointer items-start gap-3 rounded-xl p-4 text-left transition-all duration-200 hover:-translate-y-px" style={`background:${hovered?.id === suc.id ? '#EBF6FD' : '#fff'}; border:1.5px solid ${hovered?.id === suc.id ? '#1387C7' : '#E2E7F2'}; box-shadow:0 1px 3px rgba(0,0,0,0.05)`}>
-              <div class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style="background:#EBF6FD"><MapPin class="h-5 w-5" style="color:#1387C7" /></div>
+            <button 
+              onclick={() => (selected = suc)} 
+              onmouseenter={() => (hovered = suc)} 
+              onmouseleave={() => (hovered = null)} 
+              class="flex cursor-pointer items-start gap-3 rounded-xl p-4 text-left transition-all duration-200 hover:-translate-y-px border-[1.5px] shadow-[0_1px_3px_rgba(0,0,0,0.05)]
+                {hovered?.id === suc.id 
+                  ? 'bg-[#EBF6FD] border-primary' 
+                  : 'bg-white border-border'}"
+            >
+              <div class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EBF6FD]"><MapPin class="h-5 w-5 text-primary" /></div>
               <div class="flex min-w-0 flex-1 flex-col gap-1">
-                <span style="font-size:15px; font-weight:700; color:#1A1D2E">{suc.name}</span>
-                <span class="line-clamp-2" style="font-size:13px; color:#4A5068">{suc.address}</span>
+                <span class="text-[15px] font-bold text-foreground">{suc.name}</span>
+                <span class="line-clamp-2 text-[13px] text-[#4A5068]">{suc.address}</span>
                 <div class="mt-1 flex flex-wrap items-center gap-3">
                   {#if suc.distance}
-                    <span class="flex items-center gap-1" style="font-size:12px; color:#1387C7; font-weight:600"><Navigation class="h-3 w-3" /> {suc.distance}</span>
+                    <span class="flex items-center gap-1 text-xs text-primary font-semibold"><Navigation class="h-3 w-3" /> {suc.distance}</span>
                   {/if}
-                  <span class="flex items-center gap-1" style="font-size:12px; color:#51A639; font-weight:500"><Clock class="h-3 w-3" /> {suc.hours}</span>
-                  <span class="rounded-full px-2 py-0.5" style="font-size:11px; font-weight:600; background:#EEF2FB; color:#4A5068">{suc.city}</span>
+                  <span class="flex items-center gap-1 text-xs text-[#51A639] font-medium"><Clock class="h-3 w-3" /> {suc.hours}</span>
+                  <span class="rounded-full px-2 py-0.5 text-[11px] font-semibold bg-[#EEF2FB] text-[#4A5068]">{suc.city}</span>
                 </div>
               </div>
               <ChevronRight class="mt-2 h-5 w-5 shrink-0" style="color:#BEC4D2" />
@@ -131,7 +190,7 @@
           {#if filtered.length === 0}
             <div class="flex flex-col items-center gap-3 py-8">
               <MapPin class="h-10 w-10" style="color:#C8E8F7" />
-              <p style="font-size:15px; color:#8890AA; text-align:center">No se encontraron sucursales.<br />Intenta con otra búsqueda.</p>
+              <p class="text-[15px] text-muted-foreground text-center">No se encontraron sucursales.<br />Intenta con otra búsqueda.</p>
             </div>
           {/if}
         </div>

@@ -101,7 +101,7 @@
     <img src={slide.image} alt="" class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-20 transition-opacity duration-700 md:opacity-30" style="mask-image: linear-gradient(to right, transparent, black 40%)" />
   </div>
 
-  <div class="relative mx-auto flex min-h-dvh max-w-7xl flex-col items-start gap-8 px-4 pt-20 pb-20 md:min-h-[520px] md:flex-row md:items-center md:gap-12 md:py-16">
+  <div class="relative mx-auto flex min-h-dvh max-w-7xl flex-col items-start gap-8 px-4 pt-24 pb-28 md:min-h-[520px] md:flex-row md:items-center md:gap-12 md:py-16">
     <!-- Izquierda: contenido -->
     <div class="z-10 flex flex-1 flex-col gap-6 text-left transition-all duration-500" style={`opacity:${isTransitioning ? 0 : 1}; transform: translateY(${isTransitioning ? '12px' : '0'})`}>
       <div class="flex flex-col gap-4">
@@ -123,17 +123,22 @@
         </p>
       </div>
 
-      <div class="flex flex-col justify-start gap-3 sm:flex-row">
-        <a href="/sucursales" class="inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 font-semibold no-underline transition" style="background:#FCD700; color:#1A1D2E; box-shadow:0 6px 20px rgba(0,0,0,0.2)">
+      <!-- Imagen móvil responsiva en el cuerpo del contenido (visible solo en celulares/tablets) -->
+      <div class="block w-full overflow-hidden rounded-2xl md:hidden" style={`opacity:${isTransitioning ? 0 : 1}; transform: scale(${isTransitioning ? 0.95 : 1}); box-shadow:0 12px 32px rgba(0,0,0,0.2); aspect-ratio:16/9`}>
+        <img src={slide.image} alt={slide.headline} class="h-full w-full object-cover" />
+      </div>
+
+      <div class="flex flex-col justify-start gap-3 sm:flex-row w-full sm:w-auto">
+        <a href="/sucursales" class="inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 font-semibold no-underline transition text-center" style="background:#FCD700; color:#1A1D2E; box-shadow:0 6px 20px rgba(0,0,0,0.2)">
           <MapPin class="h-5 w-5" /> Encontrar mi Kiosko
         </a>
-        <a href={slide.ctaHref} class="inline-flex items-center justify-center gap-2 rounded-2xl border px-5 py-3 font-semibold text-white no-underline transition hover:bg-white/10" style="border-color: rgba(255,255,255,0.5)">
+        <a href={slide.ctaHref} class="inline-flex items-center justify-center gap-2 rounded-2xl border px-5 py-3.5 font-semibold text-white no-underline transition hover:bg-white/10 text-center" style="border-color: rgba(255,255,255,0.5)">
           {slide.ctaLabel} <ChevronRight class="h-5 w-5" />
         </a>
       </div>
     </div>
 
-    <!-- Derecha: tarjeta visual (oculta en móvil para no desperdiciar espacio) -->
+    <!-- Derecha: tarjeta visual (visible solo de desktop en adelante) -->
     <div class="z-10 hidden max-w-md flex-1 items-center justify-center transition-all duration-500 md:flex" style={`opacity:${isTransitioning ? 0 : 1}; transform: scale(${isTransitioning ? 0.95 : 1})`}>
       <div class="relative w-full overflow-hidden rounded-3xl" style="box-shadow:0 20px 60px rgba(0,0,0,0.25); aspect-ratio:4/5; max-height:440px">
         <img src={slide.image} alt={slide.headline} class="h-full w-full object-cover" />

@@ -228,7 +228,7 @@
 {#if chatbot.isOpen}
   <div class="fixed inset-0 z-[60] bg-black/30 md:hidden" onclick={() => chatbot.close()} role="presentation"></div>
 
-  <div class="chatbot-window fixed inset-0 z-[61] flex flex-col overflow-hidden bg-white" style="font-family: Montserrat, sans-serif">
+  <div class="chatbot-window fixed inset-0 z-[61] flex flex-col overflow-hidden bg-white">
     <!-- Header -->
     <div class="flex shrink-0 items-center gap-3 px-4 py-3" style="background:linear-gradient(135deg,#045098 0%,#1387C7 100%); color:#fff">
       <div class="flex shrink-0 items-center justify-center rounded-full" style="width:38px; height:38px; background:rgba(255,255,255,0.2)"><span style="font-size:18px">🏪</span></div>

@@ -67,12 +67,34 @@
     }
   });
 
+  // Sincronizar el estado de la cabecera para ajustar el top del sticky
+  let showHeader = $state(true);
+  let lastScrollY = 0;
+
+  function handlePageScroll() {
+    const currentScrollY = window.scrollY;
+    if (window.innerWidth < 1024) {
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        showHeader = false;
+      } else {
+        showHeader = true;
+      }
+    } else {
+      showHeader = true;
+    }
+    lastScrollY = currentScrollY;
+  }
+
   $effect(() => {
     if (pillsEl) {
       updateButtons();
       const ro = new ResizeObserver(updateButtons);
       ro.observe(pillsEl);
-      return () => ro.disconnect();
+      window.addEventListener('scroll', handlePageScroll, { passive: true });
+      return () => {
+        ro.disconnect();
+        window.removeEventListener('scroll', handlePageScroll);
+      };
     }
   });
 </script>
@@ -90,28 +112,41 @@
     </div>
   </div>
 
-  <!-- Pills sticky -->
-  <div class="sticky top-16 z-20 w-full" style="background:#fff; border-bottom:1px solid #E2E7F2; box-shadow:0 2px 6px rgba(0,0,0,0.04)">
+  <!-- Pills sticky (Ajusta su top dinámicamente si el header móvil se oculta) -->
+  <div class="sticky z-20 w-full transition-all duration-300" style={`background:#fff; border-bottom:1px solid #E2E7F2; box-shadow:0 2px 6px rgba(0,0,0,0.04); top:${showHeader ? '64px' : '0px'}`}>
     <div class="relative mx-auto max-w-7xl px-4">
+      <!-- Degradado Izquierdo -->
+      <div class="absolute -left-px top-0 bottom-0 z-[5] w-8 pointer-events-none md:left-8 transition-opacity duration-300" style={`background:linear-gradient(to right, #fff 15%, rgba(255, 255, 255, 0) 100%); opacity: ${canLeft ? '1' : '0'};`}></div>
+      
       {#if canLeft}
         <button onclick={() => scrollPills('left')} class="absolute left-0 top-1/2 z-10 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-all duration-200 md:flex" style="background:#fff; border:1.5px solid #E2E7F2; box-shadow:0 2px 8px rgba(0,0,0,0.12)" aria-label="Izquierda"><ChevronLeft class="h-4 w-4" style="color:#4A5068" /></button>
       {/if}
-      <div bind:this={pillsEl} onscroll={updateButtons} class="scrollbar-hide flex gap-2 overflow-x-auto py-3" style={`padding-left:${canLeft ? '28px' : '0'}; padding-right:${canRight ? '28px' : '0'}`}>
-        <button onclick={() => { activeCategory = null; window.scrollTo({ top: 0, behavior: 'smooth' }); }} class="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 transition-all duration-200" style={`background:${!activeCategory ? '#1387C7' : '#fff'}; color:${!activeCategory ? '#fff' : '#4A5068'}; border:1.5px solid ${!activeCategory ? '#1387C7' : '#E2E7F2'}; font-size:13px; font-weight:${!activeCategory ? 700 : 500}`}>Todos</button>
+      <div bind:this={pillsEl} onscroll={updateButtons} class="scrollbar-hide flex gap-2 overflow-x-auto py-3" style={`padding-left:${canLeft ? '20px' : '0'}; padding-right:${canRight ? '20px' : '0'}; scrollbar-width:none; -ms-overflow-style:none;`}>
+        <button onclick={() => { activeCategory = null; window.scrollTo({ top: 0, behavior: 'smooth' }); }} class="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 transition-all duration-200" style={`background:${!activeCategory ? '#1387C7' : '#fff'}; color:${!activeCategory ? '#fff' : '#4A5068'}; border:1.5px solid ${!activeCategory ? '#1387C7' : '#E2E7F2'}; font-size:13px; font-weight:${!activeCategory ? 700 : 500}`}>Todos</button>
         {#each categorias as cat (cat.id)}
           {@const meta = categoryMeta[cat.id]}
           {@const Icon = meta?.icon ?? MoreHorizontal}
           {@const on = activeCategory === cat.id}
-          <button onclick={() => scrollToCategory(cat.id)} class="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 transition-all duration-200" style={`background:${on ? (meta?.color ?? '#1387C7') : '#fff'}; color:${on ? '#fff' : '#4A5068'}; border:1.5px solid ${on ? (meta?.color ?? '#1387C7') : '#E2E7F2'}; font-size:13px; font-weight:${on ? 700 : 500}`}>
+          <button onclick={() => scrollToCategory(cat.id)} class="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 transition-all duration-200" style={`background:${on ? (meta?.color ?? '#1387C7') : '#fff'}; color:${on ? '#fff' : '#4A5068'}; border:1.5px solid ${on ? (meta?.color ?? '#1387C7') : '#E2E7F2'}; font-size:13px; font-weight:${on ? 700 : 500}`}>
             <Icon class="h-3.5 w-3.5" />{cat.nombre}
           </button>
         {/each}
       </div>
+      <!-- Degradado Derecho -->
+      <div class="absolute -right-px top-0 bottom-0 z-[5] w-8 pointer-events-none md:right-8 transition-opacity duration-300" style={`background:linear-gradient(to left, #fff 15%, rgba(255, 255, 255, 0) 100%); opacity: ${canRight ? '1' : '0'};`}></div>
+      
       {#if canRight}
         <button onclick={() => scrollPills('right')} class="absolute right-0 top-1/2 z-10 hidden h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-all duration-200 md:flex" style="background:#fff; border:1.5px solid #E2E7F2; box-shadow:0 2px 8px rgba(0,0,0,0.12)" aria-label="Derecha"><ChevronRight class="h-4 w-4" style="color:#4A5068" /></button>
       {/if}
     </div>
   </div>
+
+  <style>
+    /* Ocultar barra de scroll en navegadores basados en WebKit */
+    div.scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
 
   <!-- Secciones -->
   <section class="w-full py-10 md:py-16">
@@ -131,13 +166,13 @@
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {#each cat.servicios as svc (svc.id)}
               {@const isExp = expandedService === svc.id}
-              <div class="flex cursor-pointer flex-col rounded-xl transition-all duration-200 hover:-translate-y-px" style={`background:#fff; border:1.5px solid ${isExp ? (meta?.color ?? '#1387C7') : '#E2E7F2'}; box-shadow:${isExp ? `0 4px 16px ${meta?.color ?? '#1387C7'}20` : '0 1px 4px rgba(0,0,0,0.04)'}`} onclick={() => (expandedService = isExp ? null : svc.id)} role="button" tabindex="0" onkeydown={(e) => { if (e.key === 'Enter') expandedService = isExp ? null : svc.id; }}>
-                <div class="flex items-center gap-3 p-4">
-                  <div class="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg" style="background:#fff; border:1px solid #E2E7F2">
+              <div class="flex cursor-pointer flex-col rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md" style={`background:#fff; border:1.5px solid ${isExp ? (meta?.color ?? '#1387C7') : '#E2E7F2'}; box-shadow:${isExp ? `0 6px 20px ${meta?.color ?? '#1387C7'}22` : '0 2px 8px rgba(0,0,0,0.02)'}`} onclick={() => (expandedService = isExp ? null : svc.id)} role="button" tabindex="0" onkeydown={(e) => { if (e.key === 'Enter') expandedService = isExp ? null : svc.id; }}>
+                <div class="flex items-center gap-3.5 p-4">
+                  <div class="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl transition-all duration-300" style={`background:#fff; border:1.5px solid ${isExp ? (meta?.color ?? '#E2E7F2') : '#E2E7F2'}; box-shadow:0 2px 6px rgba(0,0,0,0.03)`}>
                     <ServiceLogo src={serviceLogos[svc.id]} alt={svc.nombre} fallbackColor={meta?.color ?? '#4A5068'} fallbackBg={meta?.bg ?? '#F0F2F8'} />
                   </div>
                   <span class="flex-1" style="font-size:15px; font-weight:600; color:#1A1D2E">{svc.nombre}</span>
-                  <ChevronRight class="h-4 w-4 shrink-0 transition-transform duration-200" style={`color:#BEC4D2; transform:rotate(${isExp ? 90 : 0}deg)`} />
+                  <ChevronRight class="h-4 w-4 shrink-0 transition-transform duration-300" style={`color:#BEC4D2; transform:rotate(${isExp ? 90 : 0}deg)`} />
                 </div>
                 {#if isExp}
                   <div class="px-4 pb-4 pt-0" style="border-top:1px solid #E2E7F2">

@@ -59,9 +59,11 @@ export const promos: Promo[] = [
 
 export const categories = [
   'Todos',
+  'Combos del Día',
   'Miércoles Cervecero',
+  'Super Lunes',
   'Cerveza, vinos y licores',
-  'Antojo',
   'Bebidas',
-  'Súper Lunes'
+  'Antojo',
+  'Hogar y Despensa'
 ];
