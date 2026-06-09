@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Myriad Pro';
+  src: url('/Fonts/MyriadPro-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
   --font-size: 16px;
-  --font-family: 'Gotham', 'Gotham SSm', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family: 'Myriad Pro', 'Gotham', 'Gotham SSm', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --background: #ffffff;
   --foreground: #1a1d2e;
   --card: #ffffff;
