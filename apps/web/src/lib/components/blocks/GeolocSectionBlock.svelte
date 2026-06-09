@@ -16,7 +16,75 @@
   }
 
   const states = ['Todos', ...Array.from(new Set(sucursales.map((s) => s.state)))];
-  const cities = Array.from(new Set(sucursales.map((s) => s.city)));
+
+  const stateNames: Record<string, string> = {
+    'Todos': 'Todos',
+    'Colima': 'Colima',
+    'Jalisco': 'Jalisco',
+    'Nayarit': 'Nayarit',
+    'Sinaloa': 'Sinaloa',
+    'Michoacan': 'Michoacán'
+  };
+
+  function joinList(arr: string[]): string {
+    const mapped = arr.map(s => stateNames[s] || s);
+    if (mapped.length === 0) return '';
+    if (mapped.length === 1) return mapped[0];
+    if (mapped.length === 2) return `${mapped[0]} y ${mapped[1]}`;
+    return mapped.slice(0, -1).join(', ') + ' y ' + mapped[mapped.length - 1];
+  }
+
+  const citiesWithCount = $derived.by(() => {
+    const activeSucursales = filterState === 'Todos'
+      ? sucursales
+      : sucursales.filter((s) => s.state === filterState);
+
+    const cityData: Record<string, { name: string; count: number; minDistance: number }> = {};
+    
+    for (const s of activeSucursales) {
+      const cityClean = s.city.trim();
+      if (!cityData[cityClean]) {
+        cityData[cityClean] = { name: cityClean, count: 0, minDistance: 999999 };
+      }
+      cityData[cityClean].count += 1;
+      
+      if (userLocation) {
+        const dist = haversine(userLocation.lat, userLocation.lng, s.lat, s.lng);
+        if (dist < cityData[cityClean].minDistance) {
+          cityData[cityClean].minDistance = dist;
+        }
+      }
+    }
+
+    const result = Object.values(cityData);
+    
+    if (userLocation) {
+      return result.sort((a, b) => a.minDistance - b.minDistance);
+    } else {
+      return result.sort((a, b) => b.count - a.count);
+    }
+  });
+
+  const subtitleText = $derived.by(() => {
+    if (searchText) {
+      const q = searchText.toLowerCase().trim();
+      const matchingCity = citiesWithCount.find(c => c.name.toLowerCase() === q);
+      if (matchingCity) {
+        const sampleStore = sucursales.find(s => s.city.toLowerCase() === q);
+        const stateName = sampleStore ? (stateNames[sampleStore.state] || sampleStore.state) : '';
+        const stateStr = stateName ? `, ${stateName}` : '';
+        return `${filtered.length} tienda${filtered.length !== 1 ? 's' : ''} en ${matchingCity.name}${stateStr}`;
+      }
+      return `${filtered.length} tienda${filtered.length !== 1 ? 's' : ''} encontrada${filtered.length !== 1 ? 's' : ''} para "${searchText}"`;
+    }
+    
+    if (filterState === 'Todos') {
+      const allStates = states.filter(s => s !== 'Todos').sort();
+      return `${filtered.length} tiendas en ${joinList(allStates)}`;
+    }
+    
+    return `${filtered.length} tiendas en ${stateNames[filterState] || filterState}`;
+  });
 
   let searchText = $state('');
   $effect(() => { searchText = initialCity; });
@@ -68,6 +136,54 @@
       return () => ro.disconnect();
     }
   });
+
+  let searchInputEl = $state<HTMLInputElement | null>(null);
+
+  function scrollToSearch() {
+    if (searchInputEl) {
+      searchInputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      searchInputEl.focus();
+    }
+  }
+
+  function selectCity(cityName: string) {
+    searchText = cityName;
+    const firstStore = sucursales.find(s => s.city.toLowerCase() === cityName.toLowerCase());
+    if (firstStore) hovered = firstStore;
+    scrollToSearch();
+  }
+
+  const stateCenters: Record<string, { lat: number; lng: number; zoom: number }> = {
+    'Todos': { lat: 21.8, lng: -105.0, zoom: 6 },
+    'Colima': { lat: 19.15, lng: -103.95, zoom: 10 },
+    'Jalisco': { lat: 20.65, lng: -104.5, zoom: 8 },
+    'Nayarit': { lat: 21.75, lng: -104.85, zoom: 8 },
+    'Sinaloa': { lat: 24.8, lng: -107.4, zoom: 7 },
+    'Michoacan': { lat: 19.5, lng: -102.2, zoom: 9 }
+  };
+
+  const mapCenter = $derived.by(() => {
+    if (hovered) {
+      return { lat: hovered.lat, lng: hovered.lng, zoom: 16 };
+    }
+    if (userLocation) {
+      return { lat: userLocation.lat, lng: userLocation.lng, zoom: 10 };
+    }
+    return stateCenters[filterState] || stateCenters['Todos'];
+  });
+
+  const mapMarkerLabel = $derived.by(() => {
+    if (hovered) {
+      return `${hovered.name}, ${hovered.city}, ${stateNames[hovered.state] || hovered.state}`;
+    }
+    if (userLocation) {
+      return 'Mi ubicación';
+    }
+    if (filterState !== 'Todos') {
+      return `Tiendas Kiosko en ${stateNames[filterState] || filterState}, México`;
+    }
+    return 'Tiendas Kiosko, Occidente México';
+  });
 </script>
 
 <section class="w-full py-12 md:py-20 bg-muted">
@@ -76,7 +192,7 @@
     <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div class="flex flex-col gap-2">
         <h2 class="text-[clamp(28px,4vw,36px)] font-bold leading-[1.2] tracking-tight text-foreground m-0">Encuentra tu sucursal</h2>
-        <p class="text-[18px] text-[#4A5068] m-0">{filtered.length} tiendas en {filterState === 'Todos' ? 'Colima, Jalisco, Nayarit y Sinaloa' : filterState}</p>
+        <p class="text-[18px] text-[#4A5068] m-0">{subtitleText}</p>
       </div>
       <button 
         onclick={() => (locModalOpen = true)} 
@@ -109,7 +225,7 @@
                 ? 'bg-primary border-primary text-white font-bold' 
                 : 'bg-white border-border text-[#4A5068] font-medium'}"
           >
-            {st}
+            {stateNames[st] || st}
           </button>
         {/each}
       </div>
@@ -122,28 +238,36 @@
       <!-- Mapa -->
       <div class="relative min-h-[260px] flex-1 overflow-hidden rounded-2xl md:min-h-[450px] border-[1.5px] border-border">
         <MapEmbed
-          lat={hovered?.lat ?? userLocation?.lat ?? 21.5}
-          lng={hovered?.lng ?? userLocation?.lng ?? -104.9}
-          zoom={hovered ? 16 : userLocation ? 10 : 6}
-          markerLabel={hovered?.name ?? (userLocation ? 'Mi ubicación' : undefined)}
+          lat={mapCenter.lat}
+          lng={mapCenter.lng}
+          zoom={mapCenter.zoom}
+          markerLabel={mapMarkerLabel}
           class="h-full min-h-[260px] w-full md:min-h-[450px]"
         />
         <div class="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-xl px-3 py-2 bg-white/95 shadow-[0_4px_12px_rgba(0,0,0,0.1)] backdrop-blur-sm">
           <div class="flex h-7 w-7 items-center justify-center rounded-md bg-primary"><MapPin class="h-4 w-4 text-white" /></div>
           <div class="flex flex-col">
             <span class="text-[13px] font-bold text-foreground">{hovered ? hovered.name : 'Sucursales Kiosko'}</span>
-            <span class="text-[11px] text-[#4A5068]">{hovered ? `${hovered.city}, ${hovered.state}` : `${filtered.length} ubicaciones`}</span>
+            <span class="text-[11px] text-[#4A5068]">{hovered ? `${hovered.city}, ${stateNames[hovered.state] || hovered.state}` : `${filtered.length} ubicaciones`}</span>
           </div>
         </div>
-        <div class="absolute bottom-4 left-4 right-4 z-10 flex flex-wrap gap-2">
-          {#each cities.filter((c) => filterState === 'Todos' || sucursales.some((s) => s.city === c && s.state === filterState)) as city (city)}
+        <div class="absolute bottom-4 left-4 right-4 z-10 flex flex-wrap gap-2 max-h-[140px] overflow-y-auto scrollbar-hide">
+          {#each citiesWithCount.slice(0, 5) as city (city.name)}
             <button 
-              onclick={() => { const cs = sucursales.find((s) => s.city === city); if (cs) hovered = cs; }} 
-              class="cursor-pointer rounded-full px-3 py-1.5 transition-all bg-white/92 backdrop-blur-sm border border-border/60 text-xs font-semibold text-foreground shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+              onclick={() => selectCity(city.name)} 
+              class="cursor-pointer rounded-full px-3 py-1.5 transition-all bg-white/92 backdrop-blur-sm border border-border/60 text-xs font-semibold text-foreground shadow-[0_2px_8px_rgba(0,0,0,0.08)] active:scale-95"
             >
-              <span class="text-primary">{sucursales.filter((s) => s.city === city).length}</span> {city}
+              <span class="text-primary">{city.count}</span> {city.name}
             </button>
           {/each}
+          {#if citiesWithCount.length > 5}
+            <button 
+              onclick={scrollToSearch} 
+              class="cursor-pointer rounded-full px-3 py-1.5 transition-all bg-white/92 backdrop-blur-sm border border-border/60 text-xs font-semibold text-primary shadow-[0_2px_8px_rgba(0,0,0,0.08)] active:scale-95"
+            >
+              + {citiesWithCount.length - 5} más
+            </button>
+          {/if}
         </div>
       </div>
 
@@ -151,7 +275,7 @@
       <div class="flex w-full flex-col gap-4 lg:w-[400px]">
         <div class="relative">
           <Search class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2" style="color:#8890AA" />
-          <input type="text" bind:value={searchText} placeholder="Buscar por ciudad, sucursal o dirección..." class="w-full rounded-xl py-3.5 pl-12 pr-4 outline-none border-[1.5px] border-border text-[15px] bg-white" />
+          <input bind:this={searchInputEl} type="text" bind:value={searchText} placeholder="Buscar por ciudad, sucursal o dirección..." class="w-full rounded-xl py-3.5 pl-12 pr-4 outline-none border-[1.5px] border-border text-[15px] bg-white" />
         </div>
 
         <div class="flex items-center justify-between px-1">
