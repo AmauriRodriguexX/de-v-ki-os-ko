@@ -1,7 +1,8 @@
 <script lang="ts">
   import { tick } from 'svelte';
+  import { base } from '$app/paths';
   import { page } from '$app/stores';
-  import { Home, Landmark, Wallet, Smartphone, Gamepad2, GraduationCap, MoreHorizontal, ChevronRight, Search, Info, ChevronLeft } from '@lucide/svelte';
+  import { Home, Landmark, Wallet, Smartphone, Gamepad2, GraduationCap, MoreHorizontal, ChevronRight, Search, Info, ChevronLeft, MapPin } from '@lucide/svelte';
   import ServiceLogo from '$lib/components/atoms/ServiceLogo.svelte';
   import serviciosData from '$lib/data/servicios.json';
 
@@ -199,10 +200,15 @@
   </section>
 
   <!-- CTA -->
-  <div class="w-full py-10" style="background:linear-gradient(135deg,#045098 0%,#1387C7 100%)">
-    <div class="mx-auto flex max-w-3xl flex-col items-center gap-4 px-4 text-center">
-      <h3 style="font-size:clamp(22px,3vw,28px); font-weight:700; color:#fff; margin:0">No encuentras el servicio que buscas?</h3>
-      <p style="font-size:16px; color:rgba(255,255,255,0.8); margin:0">Visita tu sucursal mas cercana y pregunta por nuestro catalogo completo de servicios disponibles.</p>
+  <div class="w-full py-12" style="background:linear-gradient(135deg,#045098 0%,#1387C7 100%)">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center">
+      <div class="flex flex-col gap-2">
+        <h3 style="font-size:clamp(22px,3vw,28px); font-weight:700; color:#fff; margin:0">¿No encuentras el servicio que buscas?</h3>
+        <p style="font-size:16px; color:rgba(255,255,255,0.85); margin:0; max-w-xl">Visita tu sucursal más cercana y pregunta por nuestro catálogo completo de servicios disponibles.</p>
+      </div>
+      <a href="{base}/sucursales" class="inline-flex items-center gap-2 px-6 py-3.5 no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:scale-98" style="background:#FCD700; color:#1A1D2E; font-size:15px; font-weight:700; border-radius:18px; box-shadow:0 6px 20px rgba(0,0,0,0.15)">
+        <MapPin class="h-5 w-5" /> Encontrar mi sucursal
+      </a>
     </div>
   </div>
 </div>
