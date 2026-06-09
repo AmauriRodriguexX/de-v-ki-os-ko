@@ -17,7 +17,7 @@
   {:else}
     <div class="relative inline-flex">
       <a
-        href="/yaya"
+        href="{base}/yaya"
         class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
         style="background:linear-gradient(90deg,#FCD700 0%,#FFE44D 40%,#FFF3B8 50%,#FFE44D 60%,#FCD700 100%); background-size:200% 100%; animation:yayaShimmer 3s ease-in-out infinite; color:#1A1D2E; font-size:12px; font-weight:700"
         onmouseenter={() => (showTooltip = true)}

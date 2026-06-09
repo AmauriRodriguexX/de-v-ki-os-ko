@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { MapPin, MessageCircle } from '@lucide/svelte';
@@ -10,13 +11,13 @@
   let hoveredId = $state<string | null>(null);
 
   const items = [
-    { id: 'sucursal', label: 'Encuentra tu Kiosko', bg: '#1387C7', shadow: '0 4px 16px rgba(19,135,199,0.4)', pulseColor: 'rgba(19,135,199,0.4)', action: () => goto('/sucursales'), hideOnPath: '/sucursales' },
+    { id: 'sucursal', label: 'Encuentra tu Kiosko', bg: '#1387C7', shadow: '0 4px 16px rgba(19,135,199,0.4)', pulseColor: 'rgba(19,135,199,0.4)', action: () => goto(`${base}/sucursales`), hideOnPath: '/sucursales' },
     { id: 'whatsapp', label: 'Promos por WhatsApp', bg: '#25D366', shadow: '0 4px 16px rgba(37,211,102,0.4)', pulseColor: '', action: () => window.open(WA_LINK, '_blank', 'noopener,noreferrer'), hideOnPath: '' },
     { id: 'soporte', label: 'Atención al cliente', bg: '#045098', shadow: '0 4px 16px rgba(4,80,152,0.4)', pulseColor: '', action: () => chatbot.open(), hideOnPath: '' }
   ];
 
   const visibleItems = $derived(
-    items.filter((i) => !i.hideOnPath || !$page.url.pathname.startsWith(i.hideOnPath))
+    items.filter((i) => !i.hideOnPath || !$page.url.pathname.startsWith(base + i.hideOnPath))
   );
 </script>
 

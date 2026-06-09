@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { Sparkles } from '@lucide/svelte';
@@ -10,7 +11,7 @@
   const today = new Date().getDay();
   const activeCombos = crossingPromos.filter((c) => c.activeDays.length === 0 || c.activeDays.includes(today));
 
-  const isPromoPage = $derived($page.url.pathname.startsWith('/promociones'));
+  const isPromoPage = $derived($page.url.pathname.startsWith(base + '/promociones'));
   let selectedSucursal = $state<Sucursal | null>(null);
   
   const encuentralo = () => {
@@ -41,7 +42,7 @@
 
       {#if !isPromoPage}
         <div class="mt-8 flex justify-center">
-          <a href="/promociones" class="inline-flex items-center gap-2 px-6 py-3 no-underline transition-all duration-200 hover:-translate-y-0.5" style="background:#1A1D2E; color:#fff; font-size:14px; font-weight:700; border-radius:16px">Ver todos los combos</a>
+          <a href="{base}/promociones" class="inline-flex items-center gap-2 px-6 py-3 no-underline transition-all duration-200 hover:-translate-y-0.5" style="background:#1A1D2E; color:#fff; font-size:14px; font-weight:700; border-radius:16px">Ver todos los combos</a>
         </div>
       {/if}
     </div>

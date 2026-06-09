@@ -129,10 +129,10 @@
       </div>
 
       <div class="flex flex-col justify-start gap-3 sm:flex-row w-full sm:w-auto">
-        <a href="/sucursales" class="inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 font-semibold no-underline transition text-center" style="background:#FCD700; color:#1A1D2E; box-shadow:0 6px 20px rgba(0,0,0,0.2)">
+        <a href="{base}/sucursales" class="inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 font-semibold no-underline transition text-center" style="background:#FCD700; color:#1A1D2E; box-shadow:0 6px 20px rgba(0,0,0,0.2)">
           <MapPin class="h-5 w-5" /> Encontrar mi Kiosko
         </a>
-        <a href={slide.ctaHref} class="inline-flex items-center justify-center gap-2 rounded-2xl border px-5 py-3.5 font-semibold text-white no-underline transition hover:bg-white/10 text-center" style="border-color: rgba(255,255,255,0.5)">
+        <a href="{base}{slide.ctaHref}" class="inline-flex items-center justify-center gap-2 rounded-2xl border px-5 py-3.5 font-semibold text-white no-underline transition hover:bg-white/10 text-center" style="border-color: rgba(255,255,255,0.5)">
           {slide.ctaLabel} <ChevronRight class="h-5 w-5" />
         </a>
       </div>

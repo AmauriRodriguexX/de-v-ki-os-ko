@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { base } from '$app/paths';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { MapPin, MessageCircle, Home } from '@lucide/svelte';
@@ -15,8 +16,8 @@
   const locSingular = $derived(($page.data.locationsLabelSingular as string) ?? 'Sucursal');
 
   const items = $derived([
-    { id: 'inicio', label: 'Inicio', bg: '#1A1D2E', action: () => goto('/') },
-    { id: 'sucursal', label: locSingular, bg: '#1387C7', action: () => goto('/sucursales') },
+    { id: 'inicio', label: 'Inicio', bg: '#1A1D2E', action: () => goto(`${base}/`) },
+    { id: 'sucursal', label: locSingular, bg: '#1387C7', action: () => goto(`${base}/sucursales`) },
     { id: 'whatsapp', label: 'WhatsApp', bg: '#25D366', action: () => window.open(WA_LINK, '_blank', 'noopener,noreferrer') },
     { id: 'soporte', label: 'Soporte', bg: '#045098', action: () => chatbot.open() }
   ]);

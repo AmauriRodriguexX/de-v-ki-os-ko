@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { ChevronDown, Facebook, Instagram, Youtube } from '@lucide/svelte';
   import { slide } from 'svelte/transition';
   import TikTokIcon from '$lib/components/icons/TikTokIcon.svelte';
@@ -7,36 +8,36 @@
     {
       title: 'Más información',
       links: [
-        { label: 'Quienes somos', href: '/quienes-somos' },
-        { label: 'Productos Destacados', href: '/' },
-        { label: 'Bolsa de trabajo', href: '/' },
-        { label: 'Administra una tienda', href: '/' },
-        { label: 'Facturación', href: '/facturacion' },
-        { label: 'Comunicados', href: '/' },
-        { label: 'Proveedores', href: '/' },
-        { label: 'Bienes raíces', href: '/' }
+        { label: 'Quienes somos', href: `${base}/quienes-somos` },
+        { label: 'Productos Destacados', href: `${base}/` },
+        { label: 'Bolsa de trabajo', href: `${base}/` },
+        { label: 'Administra una tienda', href: `${base}/` },
+        { label: 'Facturación', href: `${base}/facturacion` },
+        { label: 'Comunicados', href: `${base}/` },
+        { label: 'Proveedores', href: `${base}/` },
+        { label: 'Bienes raíces', href: `${base}/` }
       ]
     },
     {
       title: 'Promos',
       links: [
-        { label: 'Miércoles Cervecero', href: '/promociones/miercoles-cervecero' },
-        { label: 'Sábado al Carbón', href: '/promociones/sabado-al-carbon' },
-        { label: 'Kanasta del Hogar', href: '/promociones/kanasta-del-hogar' },
-        { label: 'Fiesta', href: '/promociones/fiesta' },
-        { label: 'Hidratación', href: '/promociones/hidratacion' }
+        { label: 'Miércoles Cervecero', href: `${base}/promociones/miercoles-cervecero` },
+        { label: 'Sábado al Carbón', href: `${base}/promociones/sabado-al-carbon` },
+        { label: 'Kanasta del Hogar', href: `${base}/promociones/kanasta-del-hogar` },
+        { label: 'Fiesta', href: `${base}/promociones/fiesta` },
+        { label: 'Hidratación', href: `${base}/promociones/hidratacion` }
       ]
     },
     {
       title: 'Servicios',
       links: [
-        { label: 'Servicios del hogar', href: '/servicios/servicios-del-hogar' },
-        { label: 'Financieros', href: '/servicios/servicios-financieros' },
-        { label: 'Medios de pago', href: '/servicios/servicios-medios-de-pago' },
-        { label: 'Tiempo Aire y datos', href: '/servicios/servicios-tiempo-aire-y-datos' },
-        { label: 'Entretenimiento', href: '/servicios/servicios-entretenimiento' },
-        { label: 'Escuela y Gobierno', href: '/servicios/servicios-escuela-y-gobierno' },
-        { label: 'Otros Servicios', href: '/servicios/servicios-otros-servicios' }
+        { label: 'Servicios del hogar', href: `${base}/servicios/servicios-del-hogar` },
+        { label: 'Financieros', href: `${base}/servicios/servicios-financieros` },
+        { label: 'Medios de pago', href: `${base}/servicios/servicios-medios-de-pago` },
+        { label: 'Tiempo Aire y datos', href: `${base}/servicios/servicios-tiempo-aire-y-datos` },
+        { label: 'Entretenimiento', href: `${base}/servicios/servicios-entretenimiento` },
+        { label: 'Escuela y Gobierno', href: `${base}/servicios/servicios-escuela-y-gobierno` },
+        { label: 'Otros Servicios', href: `${base}/servicios/servicios-otros-servicios` }
       ]
     }
   ];
@@ -144,7 +145,7 @@
     <div class="mt-8 flex flex-col items-center justify-between gap-4 pt-6 md:flex-row" style="border-top:1px solid rgba(255,255,255,0.2)">
       <div class="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
         <span style="font-size:12px; color:#fff; letter-spacing:0.04em">&copy; 2024 KIOSKO TODOS LOS DERECHOS RESERVADOS</span>
-        <a href="/" class="no-underline transition-opacity hover:opacity-80" style="font-size:12px; color:#fff; letter-spacing:0.04em">AVISO DE PRIVACIDAD</a>
+        <a href="{base}/" class="no-underline transition-opacity hover:opacity-80" style="font-size:12px; color:#fff; letter-spacing:0.04em">AVISO DE PRIVACIDAD</a>
       </div>
       <div class="flex gap-4">
         {#each socialLinks as s (s.label)}
