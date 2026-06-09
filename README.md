@@ -190,10 +190,11 @@ El menú incluye las 9 zonas de expansión: Colima, Guzmán, Tecomán, Manzanill
 
 ## Pendientes
 
-| Tarea | Descripción |
-|---|---|
-| Inicializar Strapi | `cd cms && npx create-strapi-app@latest . --quickstart`. El modelo de contenido sugerido está en `cms/README.md` |
-| Deploy a GitHub Pages | Cambiar a `adapter-static`, configurar GitHub Actions |
-| Analítica A/B | Conectar `window.dataLayer` a GA4 o PostHog para medir conversión "Sucursales" vs "Ubicaciones" |
-| GeoModal en PromoSection | El botón "Encuéntralo" en tarjetas de promo redirige a `/sucursales` en lugar de abrir el modal de mapa |
-| Chatbot backend | El flujo del chatbot genera folios localmente; conectar al sistema de tickets real |
+| Tarea | Descripción | Estado |
+|---|---|---|
+| Inicializar Strapi | `cd cms && npx create-strapi-app@latest . --quickstart`. El modelo de contenido sugerido está en `cms/README.md` | Pendiente |
+| Deploy a GitHub Pages | Cambiar a `adapter-static`, configurar GitHub Actions | ✔ Completado |
+| Analítica A/B | Conectar `window.dataLayer` a GA4 o PostHog para medir conversión "Sucursales" vs "Ubicaciones" | Pendiente |
+| GeoModal en PromoSection | El botón "Encuéntralo" en tarjetas de promo redirige a `/sucursales` en lugar de abrir el modal de mapa | Pendiente |
+| Chatbot backend | El flujo del chatbot genera folios localmente; conectar al sistema de tickets real | Pendiente |
+| Logotipo "Compra Segura" | Agregar logotipo de compra segura en la sección/tarjetas de promociones | Pendiente |
